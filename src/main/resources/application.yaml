@@ -1,0 +1,14 @@
+spring:
+  main:
+    banner-mode: off
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/overbrain-local
+    username: postgres
+    password: Engineer6544
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    show-sql: true
