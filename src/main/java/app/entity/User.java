@@ -2,12 +2,14 @@ package app.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Table(name = "users")
 public class User {
@@ -35,4 +37,9 @@ public class User {
 
     @NotNull
     private String Status;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
