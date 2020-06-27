@@ -37,10 +37,13 @@ public class UserController {
     }
 
     @PostMapping("login")
-    String handleLogin(@RequestParam String username, @RequestParam String password) {
-        log.info(username);
-        log.info(password);
-        return userService.login(username, password).isPresent() ? "redirect:/main" : "redirect:/user/login";
+    String handleLogin(@RequestParam String username, @RequestParam String password, Model model) {
+        if(userService.login(username, password).isPresent()){
+            return "redirect:/main";
+        }
+        else
+         model.addAttribute("message", "Username or Password is wrong!");
+        return "login";
     }
 
     /**
@@ -65,9 +68,6 @@ public class UserController {
         return "recovery";
     }
 
-    /**
-     * http://localhost:8080/user/pin-checking
-     */
     @GetMapping("pin-checking")
     String handlePin() {
         return "pin";
@@ -76,13 +76,27 @@ public class UserController {
     @PostMapping("pin-checking")
     String handlePin(@RequestParam String pin, Model model) {
         if (pin.equals(mailPin)) {
-            User user = userService.getUser(umail);
-            user.setPassword("123456");
-            userService.updatePass(user);
-            return "redirect:/user/login";
+            return "redirect:/user/password-updating";
         } else {
             model.addAttribute("message", "Pins didn't match!");
             return "pin";
         }
+    }
+
+    @GetMapping("password-updating")
+    String handlePassword(){
+        return "password";
+    }
+
+    @PostMapping("password-updating")
+    String handlePassword(@RequestParam String newPass, @RequestParam String conPass, Model model){
+        if(newPass.equals(conPass)){
+            User user = userService.getUser(umail);
+            user.setPassword(newPass);
+            userService.updatePass(user);
+            return "redirect:/user/login";
+        }else
+            model.addAttribute("message", "Passwords didn't match!");
+        return "password";
     }
 }
