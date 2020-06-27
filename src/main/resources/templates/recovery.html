@@ -11,16 +11,14 @@
     <div class="container">
 
         <form class="form" method="post">
-            <input type="text" placeholder="Email" name="email">
+            <input required type="email" placeholder="Email" name="email">
             <button type="submit" name="button" value="send">Send pin</button>
-        <br>
-        <br>
-        <br>
-            <input type="text" placeholder="4 digit pin" name="pin">
-            <button type="submit" name="button" value="submit">Submit pin</button>
             <br>
             <br>
-            <a href="login">Sign in</a>
+            <a href="/user/login">Sign in</a>
+            <br>
+            <br>
+            <label th:text="${message}"></label>
         </form>
     </div>
     <ul class="bg-bubbles">

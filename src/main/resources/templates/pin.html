@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,15 +9,15 @@
 <body>
 <div class="wrapper">
     <div class="container">
-        <h1>Welcome</h1>
-
         <form class="form" method="post">
-            <input type="text" placeholder="Username" name="username">
-            <input type="password" placeholder="Password" name="password">
-            <button type="submit" id="login-button">Login</button>
+            <input required type="text" placeholder="4 digit pin" name="pin">
+            <button type="submit" name="button" value="pin">Submit</button>
             <br>
             <br>
-            <a href="/user/account-recovery">Forgot Password?</a>
+            <a href="/user/login">Sign in</a>
+            <br>
+            <br>
+            <label th:text="${message}"></label>
         </form>
     </div>
     <ul class="bg-bubbles">
@@ -43,11 +44,6 @@
     </ul>
 </div>
 <script>
-    $("#login-button").click(function(event){
-        event.preventDefault();
-        $('form').fadeOut(500);
-        $('.wrapper').addClass('form-success');
-    });
 </script>
 </body>
 </html>

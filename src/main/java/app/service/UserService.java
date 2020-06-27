@@ -5,6 +5,7 @@ import app.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -26,5 +27,9 @@ public class UserService {
                 .filter(u -> u.getUsername().equals(username) &&
                         u.getPassword().equals(password))
                 .findAny();
+    }
+
+    public List<String> getAllEmail(){
+        return userRepo.getEmails();
     }
 }
