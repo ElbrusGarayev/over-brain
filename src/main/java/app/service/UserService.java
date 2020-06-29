@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @AllArgsConstructor
 @Service
@@ -31,5 +32,14 @@ public class UserService {
 
     public List<String> getAllEmail(){
         return userRepo.getEmails();
+    }
+
+    public boolean usernameChecking(String username){
+        Pattern pattern = Pattern.compile("[A-Za-z0-9_]+");
+        return (username != null) && pattern.matcher(username).matches();
+    }
+
+    public void save(User user){
+        userRepo.save(user);
     }
 }

@@ -1,17 +1,18 @@
 package app.controller;
 
+import app.entity.SocialMediaLink;
 import app.entity.User;
 import app.mail.sending.service.PinGenerator;
 import app.mail.sending.service.Sender;
+import app.service.MediaService;
 import app.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,11 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
     private final UserService userService;
+    private final MediaService mediaService;
     private final Sender sender;
     private final PinGenerator generator;
 
     private static String mailPin;
     private static String umail;
+    private static User user;
 
     /**
      * http://localhost:8080/user/register
@@ -36,9 +39,15 @@ public class UserController {
         return "register";
     }
 
-    @PostMapping
-    String handleRegister(@RequestParam User user){
+    @SneakyThrows
+    @PostMapping("register")
+    String handleRegister(User user, SocialMediaLink link, @RequestParam("pp") MultipartFile photo){
+        user.setPhoto(photo.getBytes());
 
+        userService.save(user);
+        link.setUser(user);
+
+        mediaService.save(link);
         return "register";
     }
 

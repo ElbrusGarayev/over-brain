@@ -18,7 +18,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
 </head>
 <body>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="container p-5 mt-5">
         <div class="row main-row">
             <div class="col-md-8 p-3 shadow-lg main-col">
@@ -40,26 +40,26 @@
                 </div>
                 <div class="row w-100 ">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="text" placeholder="Fullname">
+                        <input required class="input-item w-100" type="text" placeholder="Fullname" name="fullname">
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input id="country" required class="input-item w-100" type="text" placeholder="Country">
+                        <input id="country" required class="input-item w-100" type="text" placeholder="Country" name="country">
                     </div>
                 </div>
                 <div class="row w-100 ">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="text" placeholder="Username">
+                        <input required class="input-item w-100" type="text" placeholder="Username" name="username" minlength="5" maxlength="12">
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="email" placeholder="Email">
+                        <input required class="input-item w-100" type="email" placeholder="Email" name="email">
                     </div>
                 </div>
                 <div class="row w-100">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="password" placeholder="Password">
+                        <input required class="input-item w-100" type="password" placeholder="Password" name="password">
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="password" placeholder="Confirm Password">
+                        <input required class="input-item w-100" type="password" placeholder="Confirm Password" name="rePass">
                     </div>
                 </div>
                 <div class="row w-100">
@@ -72,18 +72,18 @@
                 </div>
                 <div class="row w-100 ">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="text" placeholder="Facebook">
+                        <input class="input-item w-100" type="text" placeholder="Facebook" name="facebook">
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="text" placeholder="Twitter">
+                        <input class="input-item w-100" type="text" placeholder="Twitter" name="twitter">
                     </div>
                 </div>
                 <div class="row w-100 ">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="text" placeholder="Instagram">
+                        <input class="input-item w-100" type="text" placeholder="Instagram" name="instagram">
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="email" placeholder="Github">
+                        <input class="input-item w-100" type="text" placeholder="Github" name="github">
                     </div>
                 </div>
 
@@ -94,14 +94,14 @@
                             <div class="upload-button">
                                 <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                             </div>
-                            <input required class="file-upload" type="file" accept="image/*"/>
+                            <input required class="file-upload" type="file" accept="image/*" name="pp"/>
                         </div>
                     </div>
                 </div>
                 <div class="row w-100">
                     <div class="col-md-12 mt-2">
                         <div class="profile-card-ctr mb-3">
-                            <button class="profile-card__button button--blue js-message-btn">Register</button>
+                            <input type="submit" class="profile-card__button button--blue js-message-btn" value="Register">
                         </div>
                     </div>
                 </div>

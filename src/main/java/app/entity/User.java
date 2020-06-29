@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -35,9 +36,29 @@ public class User {
     @NotNull
     private byte[] photo;
 
-    @NotNull
     private String lastseen;
 
     @OneToOne(mappedBy = "user")
     private SocialMediaLink mediaLink;
+
+    @OneToMany(mappedBy = "user")
+    private List<Question> question;
+
+    @OneToMany(mappedBy = "who")
+    private List<Reaction> reactionsFromMe;
+
+    @OneToMany(mappedBy = "whom")
+    private List<Reaction> reactionsToMe;
+
+    @OneToMany(mappedBy = "who")
+    private List<Message> messagesFromMe;
+
+    @OneToMany(mappedBy = "whom")
+    private List<Message> messagesToMe;
+
+    @OneToMany(mappedBy = "who")
+    private List<Follow> followers;
+
+    @OneToMany(mappedBy = "whom")
+    private List<Follow> followings;
 }
