@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -22,10 +23,10 @@ public class Question {
     private String title;
 
     @NotNull
-    private String question;
+    private String details;
 
     @NotNull
-    private String date;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Log4j2
 @AllArgsConstructor
@@ -79,8 +81,9 @@ public class UserController {
     }
 
     @PostMapping("login")
-    String handleLogin(@RequestParam String username, @RequestParam String password, Model model) {
-        if (userService.login(username, password).isPresent()) {
+    String handleLogin(User user, Model model, HttpServletRequest req) {
+        if (userService.login(user.getUsername(), user.getPassword()).isPresent()) {
+            req.setAttribute("user", userService.getByUsername(user.getUsername()));
             return "redirect:/main";
         } else
             model.addAttribute("message", "Username or Password is wrong!");
