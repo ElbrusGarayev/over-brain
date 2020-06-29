@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="/css/settings.css">
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+</head>
+<body>
+<form method="post">
+    <div class="container p-5 mt-5">
+        <div class="row main-row">
+            <div class="col-md-8 p-3 shadow-lg main-col">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h3 class="text-white">Registration</h3>
+                            <div class="line-cen mb-3 mt-3 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col-md-12">
+                        <div>
+                            <h3 class="text-white">User Details*</h3>
+                            <div class="line mb-3 mt-3 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row w-100 ">
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="text" placeholder="Fullname">
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <input id="country" required class="input-item w-100" type="text" placeholder="Country">
+                    </div>
+                </div>
+                <div class="row w-100 ">
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="text" placeholder="Username">
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="password" placeholder="Password">
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="password" placeholder="Confirm Password">
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col-md-12">
+                        <div>
+                            <h3 class="text-white mt-4">Social media links</h3>
+                            <div class="line mb-3 mt-3 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row w-100 ">
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="text" placeholder="Facebook">
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="text" placeholder="Twitter">
+                    </div>
+                </div>
+                <div class="row w-100 ">
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="text" placeholder="Instagram">
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <input required class="input-item w-100" type="email" placeholder="Github">
+                    </div>
+                </div>
+
+                <div class="row w-100">
+                    <div class="col-md-12">
+                        <div class="avatar-wrapper">
+                            <img class="profile-pic" src=""/>
+                            <div class="upload-button">
+                                <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                            </div>
+                            <input required class="file-upload" type="file" accept="image/*"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col-md-12 mt-2">
+                        <div class="profile-card-ctr mb-3">
+                            <button class="profile-card__button button--blue js-message-btn">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    var mydata = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla", "Antigua &amp; Barbuda",
+        "Argentina","Aruba","Australia","Austria", "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados",
+        "Belarus","Belgium", "Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana",
+        "Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia",
+        "Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands",
+        "Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark",
+        "Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea",
+        "Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia",
+        "French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland",
+        "Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong",
+        "Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica",
+        "Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon",
+        "Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar",
+        "Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco",
+        "Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands",
+        "Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway",
+        "Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines",
+        "Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda",
+        "Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal",
+        "Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea",
+        "Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname",
+        "Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este",
+        "Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda",
+        "Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam",
+        "Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+
+
+    $('#country').autocomplete({
+        minLength: 1,
+        source: function (request, response) {
+            response($.map(mydata, function (obj, key) {
+                var name = obj.toUpperCase();
+                if (name.startsWith(request.term.toUpperCase())) {
+                    return {
+                        label: obj, // Label for Display
+                        value: obj.id // Value
+                    }
+                } else {
+                    return null;
+                }
+            }));
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -29,6 +29,20 @@ public class UserController {
     private static String umail;
 
     /**
+     * http://localhost:8080/user/register
+     */
+    @GetMapping("register")
+    String handleRegister(){
+        return "register";
+    }
+
+    @PostMapping
+    String handleRegister(@RequestParam User user){
+
+        return "register";
+    }
+
+    /**
      * http://localhost:8080/user/login
      */
     @GetMapping("login")

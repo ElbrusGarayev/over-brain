@@ -1,0 +1,9 @@
+.main-col{
+    background-color: rgba(236,240,241, 0.3);
+    border-radius: 30px;
+}
+.line{
+    width: 100px;
+    height:6px;
+    background: -webkit-linear-gradient(45deg, #4158d0, #c850c0);
+}

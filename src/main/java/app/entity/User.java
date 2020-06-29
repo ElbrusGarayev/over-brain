@@ -21,6 +21,9 @@ public class User {
     private String fullname;
 
     @NotNull
+    private String country;
+
+    @NotNull
     private String username;
 
     @NotNull
@@ -35,11 +38,6 @@ public class User {
     @NotNull
     private String lastseen;
 
-    @NotNull
-    private String Status;
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    @OneToOne(mappedBy = "user")
+    private SocialMediaLink mediaLink;
 }
