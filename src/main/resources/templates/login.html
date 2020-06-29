@@ -6,6 +6,11 @@
     <title>Title</title>
     <link rel="stylesheet" href="/css/login.css">
 </head>
+<style>
+    .sign{
+        margin-right: 28px;
+    }
+</style>
 <body>
 <div class="wrapper">
     <div class="container">
@@ -20,6 +25,7 @@
             <label th:text="${message}"></label>
             <br>
             <br>
+            <span><a href="/user/register" class="sign">Sign up</a></span>
             <a href="/user/account-recovery">Forgot Password?</a>
         </form>
     </div>

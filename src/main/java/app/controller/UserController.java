@@ -13,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Log4j2
 @AllArgsConstructor
@@ -30,24 +30,43 @@ public class UserController {
     private static String mailPin;
     private static String umail;
     private static User user;
+    private static SocialMediaLink mediaLink;
 
     /**
      * http://localhost:8080/user/register
      */
     @GetMapping("register")
-    String handleRegister(){
+    String handleRegister() {
         return "register";
     }
 
     @SneakyThrows
     @PostMapping("register")
-    String handleRegister(User user, SocialMediaLink link, @RequestParam("pp") MultipartFile photo){
-        user.setPhoto(photo.getBytes());
-
-        userService.save(user);
-        link.setUser(user);
-
-        mediaService.save(link);
+    String handleRegister(Model model, User newUser, SocialMediaLink link,
+                          @RequestParam("pp") MultipartFile photo, @RequestParam String rePass) {
+        String regChecking = userService.registerChecking(newUser.getPassword(), rePass, newUser.getUsername());
+        if (userService.getAllEmail().contains(newUser.getEmail())) {
+            model.addAttribute("mailMsg", "Email is already used!");
+            return "register";
+        }
+        if (userService.getAllUsernames().contains(newUser.getUsername())) {
+            model.addAttribute("nameMsg", "Username is already used!");
+            return "register";
+        }
+        if (regChecking.equals("ok")) {
+            newUser.setPhoto(photo.getBytes());
+            user = newUser;
+            mailPin = String.valueOf(generator.generate());
+            sender.sendMail(newUser.getEmail(), mailPin);
+            link.setUser(newUser);
+            mediaLink = link;
+            return "redirect:/user/pin-checking";
+        }
+        if (regChecking.equals("wrongName")) {
+            model.addAttribute("nameMsg", "Username is wrong!");
+            return "register";
+        }
+        model.addAttribute("passMsg", "Passwords didn't match!");
         return "register";
     }
 
@@ -61,11 +80,10 @@ public class UserController {
 
     @PostMapping("login")
     String handleLogin(@RequestParam String username, @RequestParam String password, Model model) {
-        if(userService.login(username, password).isPresent()){
+        if (userService.login(username, password).isPresent()) {
             return "redirect:/main";
-        }
-        else
-         model.addAttribute("message", "Username or Password is wrong!");
+        } else
+            model.addAttribute("message", "Username or Password is wrong!");
         return "login";
     }
 
@@ -79,13 +97,13 @@ public class UserController {
 
     @PostMapping("account-recovery")
     String handleRecovery(@RequestParam String email, Model model) {
-        if(userService.getAllEmail().contains(email)){
+        if (userService.getAllEmail().contains(email)) {
             umail = email;
             mailPin = String.valueOf(generator.generate());
             log.info(mailPin);
-            sender.sendMail(email, "Your Password Changing PIN", String.valueOf(mailPin));
+            sender.sendMail(email, mailPin);
             return "redirect:/user/pin-checking";
-        }else{
+        } else {
             model.addAttribute("message", "Are you sure you have an account? :(");
         }
         return "recovery";
@@ -99,6 +117,11 @@ public class UserController {
     @PostMapping("pin-checking")
     String handlePin(@RequestParam String pin, Model model) {
         if (pin.equals(mailPin)) {
+            if (user != null) {
+                userService.save(user);
+                mediaService.save(mediaLink);
+                return "redirect:/user/login";
+            }
             return "redirect:/user/password-updating";
         } else {
             model.addAttribute("message", "Pins didn't match!");
@@ -107,18 +130,18 @@ public class UserController {
     }
 
     @GetMapping("password-updating")
-    String handlePassword(){
+    String handlePassword() {
         return "password";
     }
 
     @PostMapping("password-updating")
-    String handlePassword(@RequestParam String newPass, @RequestParam String conPass, Model model){
-        if(newPass.equals(conPass)){
+    String handlePassword(@RequestParam String newPass, @RequestParam String conPass, Model model) {
+        if (newPass.equals(conPass)) {
             User user = userService.getUser(umail);
             user.setPassword(newPass);
             userService.updatePass(user);
             return "redirect:/user/login";
-        }else
+        } else
             model.addAttribute("message", "Passwords didn't match!");
         return "password";
     }

@@ -3,6 +3,8 @@ package app.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -42,7 +44,8 @@ public class User {
     private SocialMediaLink mediaLink;
 
     @OneToMany(mappedBy = "user")
-    private List<Question> question;
+    @OrderBy("date asc")
+    private List<Question> questions;
 
     @OneToMany(mappedBy = "who")
     private List<Reaction> reactionsFromMe;

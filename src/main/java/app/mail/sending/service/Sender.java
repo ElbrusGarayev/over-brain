@@ -17,9 +17,10 @@ import javax.mail.internet.MimeMessage;
 public class Sender {
     private final JavaMailSender javaMailSender;
 
-    public EmailStatus sendMail(String to, String subject, String text) {
+    public EmailStatus sendMail(String to, String text) {
+        String subject = "Your confirmation code";
         try {
-            InternetAddress addressFrom = new InternetAddress("garayev.elbrus", "Elbrus Garayev");
+            InternetAddress addressFrom = new InternetAddress("garayev.elbrus", "Over Brain Team");
             MimeMessage mail = javaMailSender.createMimeMessage();
 
             mail.setFrom(addressFrom);

@@ -15,6 +15,16 @@ public class UserService {
 
     private final UserRepo userRepo;
 
+    public boolean usernameValidation(String username){
+        return username.matches("\\b[a-zA-Z][a-zA-Z0-9\\-._]{3,}\\b");
+    }
+
+    public String registerChecking(String pass, String rePass, String username){
+        if(pass.equals(rePass) && usernameValidation(username)) return "ok";
+        if (!usernameValidation(username)) return "wrongName";
+        else return "wrongPass";
+    }
+
     public User getUser(String email){
         return userRepo.findByEmail(email).get();
     }
@@ -34,9 +44,8 @@ public class UserService {
         return userRepo.getEmails();
     }
 
-    public boolean usernameChecking(String username){
-        Pattern pattern = Pattern.compile("[A-Za-z0-9_]+");
-        return (username != null) && pattern.matcher(username).matches();
+    public List<String> getAllUsernames(){
+        return userRepo.getUsernames();
     }
 
     public void save(User user){

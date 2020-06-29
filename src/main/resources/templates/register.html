@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org"
+        lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
@@ -25,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div>
-                            <h3 class="text-white">Registration</h3>
+                            <h3 class="text-white font-weight-bold">Registration</h3>
                             <div class="line-cen mb-3 mt-3 rounded"></div>
                         </div>
                     </div>
@@ -33,9 +34,15 @@
                 <div class="row w-100">
                     <div class="col-md-12">
                         <div>
-                            <h3 class="text-white">User Details*</h3>
+                            <h3 class="text-white font-weight-bold">User Details*</h3>
                             <div class="line mb-3 mt-3 rounded"></div>
                         </div>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col-md-12">
+                        <span class="message font-weight-bold text-danger" th:text="${nameMsg}"></span>
+                        <span class="message font-weight-bold text-danger float-right" th:text="${mailMsg}"></span>
                     </div>
                 </div>
                 <div class="row w-100 ">
@@ -56,16 +63,21 @@
                 </div>
                 <div class="row w-100">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="password" placeholder="Password" name="password">
+                        <input id="pass" required class="input-item w-100" type="password" placeholder="Password" name="password" minlength="8">
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="password" placeholder="Confirm Password" name="rePass">
+                        <input id="rePass" required class="input-item w-100" type="password" placeholder="Confirm Password" name="rePass">
+                    </div>
+                </div>
+                <div class="row w-100 msg-row">
+                    <div class="col-md-12 justify-content-center">
+                        <span id="message" class="message font-weight-bold" th:text="${passMsg}"></span>
                     </div>
                 </div>
                 <div class="row w-100">
                     <div class="col-md-12">
                         <div>
-                            <h3 class="text-white mt-4">Social media links</h3>
+                            <h3 class="text-white mt-4 font-weight-bold">Social media links</h3>
                             <div class="line mb-3 mt-3 rounded"></div>
                         </div>
                     </div>
@@ -94,7 +106,7 @@
                             <div class="upload-button">
                                 <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                             </div>
-                            <input required class="file-upload" type="file" accept="image/*" name="pp"/>
+                            <input class="file-upload" type="file" accept="image/*" name="pp"/>
                         </div>
                     </div>
                 </div>
@@ -103,6 +115,11 @@
                         <div class="profile-card-ctr mb-3">
                             <input type="submit" class="profile-card__button button--blue js-message-btn" value="Register">
                         </div>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col-md-12 mt-2 col-sign">
+                        <span><a href="/user/login" class="sign font-weight-bold">Sign in</a></span>
                     </div>
                 </div>
             </div>
@@ -152,6 +169,15 @@
                 }
             }));
         }
+    });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $('#pass, #rePass').on('keyup', function () {
+        if ($('#pass').val() == $('#rePass').val()) {
+            $('#message').html('Matching').css('color', 'green');
+        } else
+            $('#message').html('Not Matching').css('color', 'red');
     });
 </script>
 <script>
