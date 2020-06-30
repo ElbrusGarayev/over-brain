@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 
 @Log4j2
@@ -59,6 +61,7 @@ public class UserController {
             newUser.setPhoto(photo.getBytes());
             user = newUser;
             mailPin = String.valueOf(generator.generate());
+            log.info(mailPin);
             sender.sendMail(newUser.getEmail(), mailPin);
             link.setUser(newUser);
             mediaLink = link;
@@ -82,8 +85,10 @@ public class UserController {
 
     @PostMapping("login")
     String handleLogin(User user, Model model, HttpServletRequest req) {
-        if (userService.login(user.getUsername(), user.getPassword()).isPresent()) {
-            req.setAttribute("user", userService.getByUsername(user.getUsername()));
+        HttpSession session = req.getSession();
+        Optional<User> current = userService.login(user.getUsername(), user.getPassword());
+        if (current.isPresent()) {
+            session.setAttribute("user", current.get());
             return "redirect:/main";
         } else
             model.addAttribute("message", "Username or Password is wrong!");

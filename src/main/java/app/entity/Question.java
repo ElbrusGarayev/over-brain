@@ -17,16 +17,17 @@ public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @OrderBy
     private long id;
 
     @NotNull
     private String title;
 
-    @NotNull
+    @Column(columnDefinition="text")
     private String details;
 
     @NotNull
-    private LocalDateTime date;
+    private String date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

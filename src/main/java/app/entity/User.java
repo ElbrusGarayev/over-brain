@@ -44,7 +44,6 @@ public class User {
     private SocialMediaLink mediaLink;
 
     @OneToMany(mappedBy = "user")
-    @OrderBy("date asc")
     private List<Question> questions;
 
     @OneToMany(mappedBy = "who")

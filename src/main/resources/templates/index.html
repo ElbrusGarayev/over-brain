@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org"
+      lang="en">
 
 <head>
     <!-- Required meta tags -->
@@ -27,7 +28,7 @@
     <div class="container">
         <a href="#" class="navbar-brand">
             <img src="/img/overbrain.png" style="width: 35px; "> <span class="text-white"
-                                                                      style="vertical-align: middle;">Over Brain</span>
+                                                                       style="vertical-align: middle;">Over Brain</span>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
@@ -81,7 +82,7 @@
 
 <div class="container main-con shadow-lg p-4 mb-lg-5">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 h-100">
             <div class="card search-card mb-4">
                 <div class="card-header">
                     <h5>Search</h5>
@@ -117,109 +118,17 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div class="card mb-4 bg-light ques-card">
+            <div class="card mb-4 bg-light ques-card" th:each="question: ${questions}">
                 <a href="question.html" class="text-dark post">
                     <div class="card-body">
-                        <h4 class="card-title"><span>Elbrus Garayev</span>: Post Title</h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                            quae
-                            provident veritatis molestias laborum incidunt nemo laboriosam numquam.
+                        <h4 class="card-title"
+                            th:text="${question.user.fullname} + ': ' + ${question.title}"></h4>
+                        <p class="card-text" th:text="${question.details}">
                         </p>
                     </div>
                 </a>
                 <div class="card-footer ques-foot text-muted bg-white">
-                    <span>Posted on 2020-05-26 13:31</span>
-                    <div class="rounded float-right">
-                        <p>Answer: 2</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4 bg-light ques-card">
-                <a href="question.html" class="text-dark post">
-                    <div class="card-body">
-                        <h4 class="card-title"><span>Elbrus Garayev</span>: Post Title</h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                            quae
-                            provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                        </p>
-                    </div>
-                </a>
-                <div class="card-footer ques-foot text-muted bg-white">
-                    <span>Posted on 2020-05-26 13:31</span>
-                    <div class="rounded float-right">
-                        <p>Answer: 2</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4 bg-light ques-card">
-                <a href="question.html" class="text-dark post">
-                    <div class="card-body">
-                        <h4 class="card-title"><span>Elbrus Garayev</span>: Post Title</h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                            quae
-                            provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                        </p>
-                    </div>
-                </a>
-                <div class="card-footer ques-foot text-muted bg-white">
-                    <span>Posted on 2020-05-26 13:31</span>
-                    <div class="rounded float-right">
-                        <p>Answer: 2</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4 bg-light ques-card">
-                <a href="question.html" class="text-dark post">
-                    <div class="card-body">
-                        <h4 class="card-title"><span>Elbrus Garayev</span>: Post Title</h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                            quae
-                            provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                        </p>
-                    </div>
-                </a>
-                <div class="card-footer ques-foot text-muted bg-white">
-                    <span>Posted on 2020-05-26 13:31</span>
-                    <div class="rounded float-right">
-                        <p>Answer: 2</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4 bg-light ques-card">
-                <a href="question.html" class="text-dark post">
-                    <div class="card-body">
-                        <h4 class="card-title"><span>Elbrus Garayev</span>: Post Title</h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                            quae
-                            provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                        </p>
-                    </div>
-                </a>
-                <div class="card-footer ques-foot text-muted bg-white">
-                    <span>Posted on 2020-05-26 13:31</span>
-                    <div class="rounded float-right">
-                        <p>Answer: 2</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4 bg-light ques-card">
-                <a href="question.html" class="text-dark post">
-                    <div class="card-body">
-                        <h4 class="card-title"><span>Elbrus Garayev</span>: Post Title</h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                            quae
-                            provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                        </p>
-                    </div>
-                </a>
-                <div class="card-footer ques-foot text-muted bg-white">
-                    <span>Posted on 2020-05-26 13:31</span>
+                    <span th:text="'Posted on ' + ${question.date}"></span>
                     <div class="rounded float-right">
                         <p>Answer: 2</p>
                     </div>
@@ -242,7 +151,8 @@
             </div>
             <div class="row mb-4">
                 <div class="col-md-12">
-                    <textarea required class="input-item w-100" placeholder="What is your problem?" name="details"></textarea>
+                    <textarea required class="input-item w-100" placeholder="What is your problem?"
+                              name="details"></textarea>
                 </div>
             </div>
             <div class="row w-100">

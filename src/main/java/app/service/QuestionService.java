@@ -5,6 +5,8 @@ import app.repository.QuestionRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class QuestionService {
@@ -13,5 +15,9 @@ public class QuestionService {
 
     public void save(Question question){
         questionRepo.save(question);
+    }
+
+    public List<Question> getAll(){
+        return questionRepo.findAllByOrderByIdDesc();
     }
 }
