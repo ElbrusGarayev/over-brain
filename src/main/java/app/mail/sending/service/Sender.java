@@ -20,7 +20,7 @@ public class Sender {
     public EmailStatus sendMail(String to, String text) {
         String subject = "Your confirmation code";
         try {
-            InternetAddress addressFrom = new InternetAddress("garayev.elbrus", "Over Brain Team");
+            InternetAddress addressFrom = new InternetAddress("overbrain.info", "Over Brain Team");
             MimeMessage mail = javaMailSender.createMimeMessage();
 
             mail.setFrom(addressFrom);

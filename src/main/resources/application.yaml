@@ -14,8 +14,8 @@ spring:
     show-sql: true
   mail:
     host: smtp.gmail.com
-    username: garayev.elbrus
-    password: Engineer6544
+    username: overbrain.info
+    password: Over_Brain2020
     port: 587
     properties:
       mail:

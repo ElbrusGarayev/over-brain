@@ -119,7 +119,7 @@
         </div>
         <div class="col-md-8">
             <div class="card mb-4 bg-light ques-card" th:each="question: ${questions}">
-                <a href="question.html" class="text-dark post">
+                <a th:href="'/question/' + ${question.id}" class="text-dark post">
                     <div class="card-body">
                         <h4 class="card-title"
                             th:text="${question.user.fullname} + ': ' + ${question.title}"></h4>
