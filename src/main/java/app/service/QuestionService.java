@@ -25,4 +25,8 @@ public class QuestionService {
     public Optional<Question> getQuestionById(long id){
         return questionRepo.findById(id);
     }
+
+    public List<Question> getAllByTitle(String str){
+        return questionRepo.findAllByTitleContainingIgnoreCase(str);
+    }
 }

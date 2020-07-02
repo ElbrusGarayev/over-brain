@@ -144,14 +144,21 @@ public class UserController {
     }
 
     @PostMapping("password-updating")
-    String handlePassword(@RequestParam String newPass, @RequestParam String conPass, Model model) {
+    RedirectView handlePassword(@RequestParam String newPass, @RequestParam String conPass, Model model) {
         if (newPass.equals(conPass)) {
             User user = userService.getUser(umail);
             user.setPassword(newPass);
             userService.updatePass(user);
-            return "redirect:/user/login";
+            return new RedirectView("/user/login");
         } else
             model.addAttribute("message", "Passwords didn't match!");
-        return "password";
+        return new RedirectView("/user/password-updating");
+    }
+
+    @GetMapping("logout")
+    RedirectView handleLogout(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        session.removeAttribute("user");
+        return new RedirectView("/user/login");
     }
 }

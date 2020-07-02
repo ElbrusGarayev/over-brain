@@ -45,7 +45,6 @@ public class UserListController {
     @RequestMapping(value="/autocomplete")
     @ResponseBody
     public List<String> plantNamesAutocomplete(@RequestParam(value="term", required = false, defaultValue="") String term)  {
-        log.info(term);
         return userService.getUsersBy(term, user.getUsername()).stream().map(el -> el.getFullname()).collect(Collectors.toList());
     }
 }

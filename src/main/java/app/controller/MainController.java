@@ -8,21 +8,21 @@ import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @AllArgsConstructor
 @Controller
-@RequestMapping("/main")
+@RequestMapping("/")
 public class MainController {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
@@ -31,13 +31,13 @@ public class MainController {
     /**
      * http://localhost:8080/main
      */
-    @GetMapping
+    @GetMapping("main")
     String handleMain(Model model){
         model.addAttribute("questions", questionService.getAll());
         return "index";
     }
 
-    @PostMapping
+    @PostMapping("main")
     RedirectView handleQuestion(Question question, HttpServletRequest req){
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
@@ -45,5 +45,18 @@ public class MainController {
         question.setUser(user);
         questionService.save(question);
         return new RedirectView("/main");
+    }
+
+    @PostMapping("/search")
+    ModelAndView handleSearch(@RequestParam String search){
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("questions", questionService.getAllByTitle(search));
+        return mav;
+    }
+
+    @RequestMapping(value="/autocompletequestion")
+    @ResponseBody
+    public List<String> plantNamesAutocomplete(@RequestParam(value="term", required = false, defaultValue="") String term)  {
+        return questionService.getAll().stream().map(question -> question.getTitle()).collect(Collectors.toList());
     }
 }

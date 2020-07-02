@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface QuestionRepo extends JpaRepository<Question, Long> {
 
-    public List<Question> findAllByOrderByIdDesc();
+    List<Question> findAllByOrderByIdDesc();
+
+    List<Question> findAllByTitleContainingIgnoreCase(String title);
 }
