@@ -46,11 +46,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Question> questions;
 
-    @OneToMany(mappedBy = "who")
-    private List<Reaction> reactionsFromMe;
+    @OneToMany(mappedBy = "user")
+    private List<Answer> answers;
 
-    @OneToMany(mappedBy = "whom")
-    private List<Reaction> reactionsToMe;
+    @OneToMany(mappedBy = "user")
+    private List<Reaction> reactions;
 
     @OneToMany(mappedBy = "who")
     private List<Message> messagesFromMe;

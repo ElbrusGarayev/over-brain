@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,12 +31,6 @@ public class MainController {
     /**
      * http://localhost:8080/main
      */
-    @GetMapping("#")
-    String handleMain2(Model model){
-        model.addAttribute("questions", questionService.getAll());
-        return "index";
-    }
-
     @GetMapping
     String handleMain(Model model){
         model.addAttribute("questions", questionService.getAll());
@@ -43,12 +38,12 @@ public class MainController {
     }
 
     @PostMapping
-    String handleQuestion(Question question, HttpServletRequest req){
+    RedirectView handleQuestion(Question question, HttpServletRequest req){
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         question.setDate(LocalDateTime.now().format(formatter));
         question.setUser(user);
         questionService.save(question);
-        return "index";
+        return new RedirectView("/main");
     }
 }

@@ -11,9 +11,9 @@
 <body>
 <nav class="navbar bg-grad navbar-expand-sm navbar-dark fixed-top">
     <div class="container">
-        <a href="#" class="navbar-brand">
-            <img src="img/overbrain.png" style="width: 35px; "> <span class="text-white"
-                                                                      style="vertical-align: middle;">Over Brain</span>
+        <a href="/main" class="navbar-brand">
+            <img src="/img/overbrain.png" style="width: 35px; "> <span class="text-white"
+                                                                       style="vertical-align: middle;">Over Brain</span>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
@@ -23,12 +23,12 @@
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item ml-5">
-                    <a href="index.html" class="nav-link active">
+                    <a href="/main" class="nav-link active">
                         Home
                     </a>
                 </li>
                 <li class="nav-item ml-5">
-                    <a href="users.html" class="nav-link active">
+                    <a href="/users" class="nav-link active">
                         Users
                     </a>
                 </li>
@@ -61,17 +61,17 @@
                     <div class="card ques-card">
                         <div class="card-body">
                             <h4 class="card-title"><strong th:text="${question.user.fullname}"></strong></h4>
-                            <p class="question" th:text="${question.details}">
-                            </p>
+                            <pre th:text="${question.details}">
+                            </pre>
                         </div>
                         <form method="post">
                             <div class="ans-row">
                                 <div class="col-md-8 mb-3">
-                                    <textarea class="input-item w-100"
-                                              placeholder="Type your answer..."></textarea>
+                                    <textarea required class="input-item w-100"
+                                              placeholder="Type your answer..." name="answerText"></textarea>
                                 </div>
                                 <div class="col-md-4 btn-div">
-                                    <input class="input-btn text-white" type="submit" value="Submit Answer">
+                                    <input class="input-btn text-white" type="submit" value="Submit Answer" name="button">
                                 </div>
                             </div>
                         </form>
@@ -88,46 +88,24 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="card ans-card mb-4 text-white">
+                    <div class="card ans-card mb-4 text-white" th:each="answer: ${answers}">
                         <div class="card-body">
-                            <h4 class="card-title"><strong>Garayev Elbrus</strong></h4>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                                quae provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                                quae provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                                quae provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                            </p>
+                            <h4 class="card-title"><strong th:text="${answer.user.fullname}"></strong></h4>
+                            <pre class="card-text" th:text="${answer.answerText}"></pre>
                         </div>
                         <div class="card-footer ans-foot text-muted bg-white">
-                            <span>Posted on 2020-05-26 13:31</span>
-                            <div class="float-right btns">
-                                <button class="text-white mt-2">Like</button>
-                                <button class="text-white mt-2">Dislike</button>
+                            <span th:text="'Posted on ' + ${answer.date}"></span>
+                            <div>
+                                <span th:text="'Useful: ' + (${answer.reaction} != null ? ${answer.reaction.good} : '0')"></span>
+                                <span class="ml-4" th:text="'Waste of time: ' + (${answer.reaction} != null ? ${answer.reaction.bad} : '0')"></span>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card ans-card mb-4 text-white">
-                        <div class="card-body">
-                            <h4 class="card-title"><strong>Aytac Aliyeva</strong></h4>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                                quae provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                                quae provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti explicabo asperiores
-                                quae provident veritatis molestias laborum incidunt nemo laboriosam numquam.
-                            </p>
-                        </div>
-                        <div class="card-footer ans-foot text-muted bg-white">
-                            <span>Posted on 2020-05-26 13:31</span>
-                            <div class="float-right btns">
-                                <button class="text-white mt-2">Like</button>
-                                <button class="text-white mt-2">Dislike</button>
-                            </div>
+                            <form method="post">
+                                <div class="float-right btns">
+                                    <input type="hidden" th:value="${answer.id}" name="answerId">
+                                    <button class="text-white mt-2" value="like" name="button">Like</button>
+                                    <button class="text-white mt-2" value="dislike" name="button">Dislike</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

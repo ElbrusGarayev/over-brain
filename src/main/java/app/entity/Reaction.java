@@ -17,14 +17,24 @@ public class Reaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
-    private boolean status;
+    @Column
+    private int good;
+
+    @Column
+    private int bad;
+
+    @OneToOne
+    @JoinColumn(name = "answer")
+    private Answer answer;
 
     @ManyToOne
-    @JoinColumn(name = "who")
-    private User who;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "whom")
-    private User whom;
+    public Reaction(int good, int bad, Answer answer, User user) {
+        this.good = good;
+        this.bad = bad;
+        this.answer = answer;
+        this.user = user;
+    }
 }

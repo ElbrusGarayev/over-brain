@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -21,9 +22,6 @@ public class SocialMediaLink {
     private String github;
 
     @OneToOne
-    @JoinColumn(
-            name = "user_id",
-            referencedColumnName = "id"
-    )
+    @JoinColumn(name = "user_id")
     private User user;
 }

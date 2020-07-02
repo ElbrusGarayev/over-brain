@@ -119,18 +119,17 @@
         </div>
         <div class="col-md-8">
             <div class="card mb-4 bg-light ques-card" th:each="question: ${questions}">
-                <a th:href="'/question/' + ${question.id}" class="text-dark post">
-                    <div class="card-body">
+                <div class="card-body">
+                    <a th:href="'/question/' + ${question.id}" class="text-dark post">
                         <h4 class="card-title"
                             th:text="${question.user.fullname} + ': ' + ${question.title}"></h4>
-                        <p class="card-text" th:text="${question.details}">
-                        </p>
-                    </div>
-                </a>
+                    </a>
+                    <pre th:text="${question.details}"></pre>
+                </div>
                 <div class="card-footer ques-foot text-muted bg-white">
                     <span th:text="'Posted on ' + ${question.date}"></span>
                     <div class="rounded float-right">
-                        <p>Answer: 2</p>
+                        <p th:text="'Answer: ' + ${question.answers.size()}"></p>
                     </div>
                 </div>
             </div>

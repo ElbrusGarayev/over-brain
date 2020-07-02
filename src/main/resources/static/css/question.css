@@ -60,13 +60,6 @@ nav {
     -webkit-text-fill-color: transparent;
 }
 
-.question {
-    font-weight: bold;
-    background: linear-gradient(#4158d0, #c850c0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 .input-item {
     height: 150px;
     padding: 10px 15px;

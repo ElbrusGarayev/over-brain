@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,12 +16,12 @@ public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OrderBy
     private long id;
 
     @NotNull
     private String title;
 
+    @NotNull
     @Column(columnDefinition="text")
     private String details;
 
