@@ -33,6 +33,6 @@ public class Answer {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "answer")
-    private Reaction reaction;
+    @OneToMany(mappedBy = "answer")
+    private List<Reaction> reactions;
 }

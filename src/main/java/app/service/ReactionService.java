@@ -5,6 +5,8 @@ import app.repository.ReactionRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class ReactionService {
@@ -18,4 +20,8 @@ public class ReactionService {
     public Reaction getByAnswerId(long id){
         return reactionRepo.findByAnswer_Id(id);
     }
+
+//    public List<Reaction> getReactionsByUIdAndAnswerId(long uid, long aid){
+//        return reactionRepo.findAllByUser_IdAndAnswer_IdAndBad(uid, aid);
+//    }
 }

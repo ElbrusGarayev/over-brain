@@ -36,7 +36,8 @@ public class User {
     private String password;
 
     @NotNull
-    private byte[] photo;
+    @Column(columnDefinition = "text")
+    private String photo;
 
     private String lastseen;
 

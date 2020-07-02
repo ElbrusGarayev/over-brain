@@ -17,13 +17,10 @@ public class Reaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
-    private int good;
+    @NotNull
+    private boolean status;
 
-    @Column
-    private int bad;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "answer")
     private Answer answer;
 
@@ -31,9 +28,8 @@ public class Reaction {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Reaction(int good, int bad, Answer answer, User user) {
-        this.good = good;
-        this.bad = bad;
+    public Reaction(boolean status, Answer answer, User user) {
+        this.status = status;
         this.answer = answer;
         this.user = user;
     }

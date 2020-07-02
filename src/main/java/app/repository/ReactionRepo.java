@@ -10,4 +10,6 @@ import java.util.List;
 public interface ReactionRepo extends JpaRepository<Reaction, Long> {
 
     Reaction findByAnswer_Id(long id);
+
+//    List<Reaction> findAllByUser_IdAndAnswer_IdAndBad(long uid, long aid);
 }

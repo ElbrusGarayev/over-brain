@@ -14,6 +14,8 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
+    List<User> findAllByFullnameContainingIgnoreCase(String str);
+
     @Query("select u.email from User u")
     List<String> getEmails();
 

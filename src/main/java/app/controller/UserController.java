@@ -17,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Base64;
 import java.util.Optional;
 
 
@@ -58,7 +59,7 @@ public class UserController {
             return "register";
         }
         if (regChecking.equals("ok")) {
-            newUser.setPhoto(photo.getBytes());
+            newUser.setPhoto(Base64.getEncoder().encodeToString(photo.getBytes()));
             user = newUser;
             mailPin = String.valueOf(generator.generate());
             log.info(mailPin);

@@ -5,9 +5,11 @@ import app.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -50,6 +52,14 @@ public class UserService {
 
     public List<String> getAllUsernames() {
         return userRepo.getUsernames();
+    }
+
+    public List<User> getUsers(){
+        return userRepo.findAll();
+    }
+
+    public List<User> getUsersBy(String str){
+        return userRepo.findAllByFullnameContainingIgnoreCase(str);
     }
 
     public void save(User user) {
