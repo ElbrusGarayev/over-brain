@@ -54,12 +54,12 @@ public class UserService {
         return userRepo.getUsernames();
     }
 
-    public List<User> getUsers(){
-        return userRepo.findAll();
+    public List<User> getUsers(String username){
+        return userRepo.findAllByUsernameIsNotLike(username);
     }
 
-    public List<User> getUsersBy(String str){
-        return userRepo.findAllByFullnameContainingIgnoreCase(str);
+    public List<User> getUsersBy(String str, String username){
+        return userRepo.findAllByFullnameContainingIgnoreCaseAndUsernameNotLike(str, username);
     }
 
     public void save(User user) {
