@@ -3,6 +3,7 @@ package app.controller;
 import app.entity.Answer;
 import app.entity.Reaction;
 import app.entity.User;
+import app.filter.Filter;
 import app.service.AnswerService;
 import app.service.QuestionService;
 import app.service.ReactionService;
@@ -32,6 +33,7 @@ public class QuestionController {
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final ReactionService reactionService;
+    private final Filter filter;
 
     /**
      * http://localhost:8080/question/1
@@ -40,10 +42,7 @@ public class QuestionController {
     ModelAndView handleQuestion(@PathVariable long id, HttpServletRequest req){
         ModelAndView mav = new ModelAndView("question");
         mav.addObject("question", questionService.getQuestionById(id).get());
-        mav.addObject("answers", answerService.getAllAnswerByQId(id));
-
-//        log.info(reactionService.getReactionsByUIdAndAnswerId(1, 1));
-
+        mav.addObject("answers", filter.entityConverter(answerService.getAllAnswerByQId(id)));
         return mav;
     }
 
@@ -62,26 +61,10 @@ public class QuestionController {
         if (button.equals("like")){
             long answerId = Long.parseLong(req.getParameter("answerId"));
             reactionService.save(new Reaction(true, answerService.getAnswerById(answerId).get(), user));
-//            Reaction reaction = reactionService.getByAnswerId(answerId);
-//            if(reaction != null){
-//                reaction.setGood(reaction.getGood() + 1);
-//                reactionService.save(reaction);
-//            }else {
-//                Answer answer1 = answerService.getAnswerById(answerId).get();
-//                reactionService.save(new Reaction(1, 0, answer1, user));
-//            }
         }
         if (button.equals("dislike")){
             long answerId = Long.parseLong(req.getParameter("answerId"));
             reactionService.save(new Reaction(false, answerService.getAnswerById(answerId).get(), user));
-//            Reaction reaction = reactionService.getByAnswerId(answerId);
-//            if(reaction != null){
-//                reaction.setBad(reaction.getBad() + 1);
-//                reactionService.save(reaction);
-//            }else {
-//                Answer answer1 = answerService.getAnswerById(answerId).get();
-//                reactionService.save(new Reaction(0, 1, answer1, user));
-//            }
         }
         return new RedirectView("/question/" + id);
     }

@@ -57,6 +57,6 @@ public class MainController {
     @RequestMapping(value="/autocompletequestion")
     @ResponseBody
     public List<String> plantNamesAutocomplete(@RequestParam(value="term", required = false, defaultValue="") String term)  {
-        return questionService.getAll().stream().map(question -> question.getTitle()).collect(Collectors.toList());
+        return questionService.getAllByTitle(term).stream().map(question -> question.getTitle()).collect(Collectors.toList());
     }
 }

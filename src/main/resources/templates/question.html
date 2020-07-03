@@ -96,8 +96,8 @@
                         <div class="card-footer ans-foot text-muted bg-white">
                             <span th:text="'Posted on ' + ${answer.date}"></span>
                             <div>
-                                <span th:text="'Useful: ' + ${answer.reactions.size()}"></span>
-                                <span th:text="'Waste of time: ' + ${answer.reactions.size()}"></span>
+                                <span th:text="'Useful: ' + ${answer.goodReactions}"></span>
+                                <span class="ml-4" th:text="'Waste of time: ' + ${answer.badReactions}"></span>
                             </div>
                             <form method="post">
                                 <div class="float-right btns">
