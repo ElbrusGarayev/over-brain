@@ -52,11 +52,11 @@ public class UserController {
     String handleRegister(Model model, User newUser, SocialMediaLink link,
                           @RequestParam("pp") MultipartFile photo, @RequestParam String rePass) {
         String regChecking = userService.registerChecking(newUser.getPassword(), rePass, newUser.getUsername());
-        if (userService.getAllEmail().contains(newUser.getEmail())) {
-            model.addAttribute("mailMsg", "Email is already used!");
+        if (userService.emailChecking(newUser.getEmail())) {
+            model.addAttribute("mailMsg", "You have account!");
             return "register";
         }
-        if (userService.getAllUsernames().contains(newUser.getUsername())) {
+        if (userService.usernameChecking(newUser.getUsername())) {
             model.addAttribute("nameMsg", "Username is already used!");
             return "register";
         }
@@ -110,7 +110,7 @@ public class UserController {
 
     @PostMapping("account-recovery")
     String handleRecovery(@RequestParam String email, Model model) {
-        if (userService.getAllEmail().contains(email)) {
+        if (userService.emailChecking(email)) {
             umail = email;
             mailPin = String.valueOf(generator.generate());
             log.info(mailPin);

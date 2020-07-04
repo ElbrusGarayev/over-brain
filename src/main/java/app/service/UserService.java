@@ -27,12 +27,16 @@ public class UserService {
         else return "wrongPass";
     }
 
-    public User getUser(String email) {
-        return userRepo.findByEmail(email).get();
+    public boolean emailChecking(String email){
+        return userRepo.findAll().stream().anyMatch(user -> user.getEmail().equals(email));
     }
 
-    public User getByUsername(String username) {
-        return userRepo.findByUsername(username).get();
+    public boolean usernameChecking(String username){
+        return userRepo.findAll().stream().anyMatch(user -> user.getUsername().equals(username));
+    }
+
+    public User getUser(String email) {
+        return userRepo.findByEmail(email).get();
     }
 
     public void updatePass(User user) {
@@ -44,14 +48,6 @@ public class UserService {
                 .filter(u -> u.getUsername().equals(username) &&
                         u.getPassword().equals(password))
                 .findAny();
-    }
-
-    public List<String> getAllEmail() {
-        return userRepo.getEmails();
-    }
-
-    public List<String> getAllUsernames() {
-        return userRepo.getUsernames();
     }
 
     public List<User> getUsers(String username){
