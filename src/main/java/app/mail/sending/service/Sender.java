@@ -36,7 +36,7 @@ public class Sender {
 
         } catch (Exception e) {
 
-            log.error(String.format("Problem with sending email to: %s, error message: %s", to, e.getMessage()));
+            log.warn(String.format("Problem with sending email to: %s, error message: %s", to, e.getMessage()));
 
             return new EmailStatus(to, subject, text).error(e.getMessage());
         }

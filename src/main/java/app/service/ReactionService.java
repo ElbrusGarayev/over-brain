@@ -1,11 +1,14 @@
 package app.service;
 
+import app.entity.Answer;
 import app.entity.Reaction;
+import app.entity.User;
 import app.repository.ReactionRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -17,11 +20,12 @@ public class ReactionService {
         reactionRepo.save(reaction);
     }
 
-    public Reaction getByAnswerId(long id){
-        return reactionRepo.findByAnswer_Id(id);
+    public Optional<Reaction> getByAnswerIdAndUser(Answer answer, User user){
+        return reactionRepo.findByAnswerAndUser(answer, user);
     }
 
-//    public List<Reaction> getReactionsByUIdAndAnswerId(long uid, long aid){
-//        return reactionRepo.findAllByUser_IdAndAnswer_IdAndBad(uid, aid);
-//    }
+    public boolean checkUser(Answer answer, User user){
+        return answer.getReactions().stream()
+                .noneMatch(reaction -> reaction.getUser().getId() == user.getId());
+    }
 }

@@ -35,4 +35,11 @@ public class Answer {
 
     @OneToMany(mappedBy = "answer")
     private List<Reaction> reactions;
+
+    public Answer(String answerText, String date, Question question, User user) {
+        this.answerText = answerText;
+        this.date = date;
+        this.question = question;
+        this.user = user;
+    }
 }

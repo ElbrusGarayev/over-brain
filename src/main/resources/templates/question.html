@@ -71,7 +71,8 @@
                                               placeholder="Type your answer..." name="answerText"></textarea>
                                 </div>
                                 <div class="col-md-4 btn-div">
-                                    <input class="input-btn text-white" type="submit" value="Submit Answer" name="button">
+                                    <input class="input-btn text-white" type="submit" value="Submit Answer"
+                                           name="button">
                                 </div>
                             </div>
                         </form>
@@ -99,13 +100,16 @@
                                 <span th:text="'Useful: ' + ${answer.goodReactions}"></span>
                                 <span class="ml-4" th:text="'Waste of time: ' + ${answer.badReactions}"></span>
                             </div>
-                            <form method="post">
-                                <div class="float-right btns">
+                            <div class="float-right btns">
+                                <form method="post" action="/question/like">
                                     <input type="hidden" th:value="${answer.id}" name="answerId">
                                     <button class="text-white mt-2" value="like" name="button">Like</button>
+                                </form>
+                                <form method="post" action="/question/dislike">
+                                    <input type="hidden" th:value="${answer.id}" name="answerId">
                                     <button class="text-white mt-2" value="dislike" name="button">Dislike</button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

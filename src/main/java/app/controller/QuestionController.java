@@ -11,10 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -22,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Log4j2
 @AllArgsConstructor
@@ -35,11 +33,18 @@ public class QuestionController {
     private final ReactionService reactionService;
     private final Filter filter;
 
+    private static long questionId;
+    private static User currUser;
+
     /**
      * http://localhost:8080/question/1
      */
     @GetMapping("{id}")
-    ModelAndView handleQuestion(@PathVariable long id, HttpServletRequest req){
+    ModelAndView handleQuestion(@PathVariable long id, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        currUser = user;
+        questionId = id;
         ModelAndView mav = new ModelAndView("question");
         mav.addObject("question", questionService.getQuestionById(id).get());
         mav.addObject("answers", filter.entityConverter(answerService.getAllAnswerByQId(id)));
@@ -47,25 +52,35 @@ public class QuestionController {
     }
 
     @PostMapping("{id}")
-    RedirectView handleQuestion(Answer answer, @PathVariable long id, HttpServletRequest req){
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
-        String button = req.getParameter("button");
-        if(button.equals("Submit Answer")){
-            answer.setId(answerService.getAnswersCount() + 1);
-            answer.setQuestion(questionService.getQuestionById(id).get());
-            answer.setUser(user);
-            answer.setDate(LocalDateTime.now().format(formatter));
-            answerService.save(answer);
-        }
-        if (button.equals("like")){
-            long answerId = Long.parseLong(req.getParameter("answerId"));
-            reactionService.save(new Reaction(true, answerService.getAnswerById(answerId).get(), user));
-        }
-        if (button.equals("dislike")){
-            long answerId = Long.parseLong(req.getParameter("answerId"));
-            reactionService.save(new Reaction(false, answerService.getAnswerById(answerId).get(), user));
-        }
+    RedirectView handleAnswer(@RequestParam Optional<String> answerText, @PathVariable long id) {
+        answerService.save(new Answer(answerText.get(), LocalDateTime.now().format(formatter),
+                questionService.getQuestionById(id).get(), currUser));
         return new RedirectView("/question/" + id);
+    }
+
+    @PostMapping("/like")
+    RedirectView handleLike(HttpServletRequest req) {
+        long answerId = Long.parseLong(req.getParameter("answerId"));
+        Answer currAnswer = answerService.getAnswerById(answerId).get();
+        Optional<Reaction> reaction = reactionService.getByAnswerIdAndUser(currAnswer, currUser);
+        if (reaction.isPresent()) {
+            reaction.get().setStatus(true);
+            reactionService.save(reaction.get());
+        } else
+            reactionService.save(new Reaction(true, currAnswer, currUser));
+        return new RedirectView("/question/" + questionId);
+    }
+
+    @PostMapping("/dislike")
+    RedirectView handleDislike(HttpServletRequest req) {
+        long answerId = Long.parseLong(req.getParameter("answerId"));
+        Answer currAnswer = answerService.getAnswerById(answerId).get();
+        Optional<Reaction> reaction = reactionService.getByAnswerIdAndUser(currAnswer, currUser);
+        if (reaction.isPresent()) {
+            reaction.get().setStatus(false);
+            reactionService.save(reaction.get());
+        } else
+            reactionService.save(new Reaction(false, currAnswer, currUser));
+        return new RedirectView("/question/" + questionId);
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,8 +42,9 @@ public class UserController {
      * http://localhost:8080/user/register
      */
     @GetMapping("register")
-    String handleRegister() {
-        return "register";
+    ModelAndView handleRegister() {
+        ModelAndView mav = new ModelAndView("register");
+        return mav;
     }
 
     @SneakyThrows
@@ -80,8 +82,9 @@ public class UserController {
      * http://localhost:8080/user/login
      */
     @GetMapping("login")
-    String handleLogin() {
-        return "login";
+    ModelAndView handleLogin() {
+        ModelAndView mav = new ModelAndView("login");
+        return mav;
     }
 
     @PostMapping("login")
@@ -91,8 +94,8 @@ public class UserController {
         if (current.isPresent()) {
             session.setAttribute("user", current.get());
             return "redirect:/main";
-        } else
-            model.addAttribute("message", "Username or Password is wrong!");
+        }
+        model.addAttribute("message", "Username or Password is wrong!");
         return "login";
     }
 
@@ -100,8 +103,9 @@ public class UserController {
      * http://localhost:8080/user/account-recovery
      */
     @GetMapping("account-recovery")
-    String handleRecovery() {
-        return "recovery";
+    ModelAndView handleRecovery() {
+        ModelAndView mav = new ModelAndView("recovery");
+        return mav;
     }
 
     @PostMapping("account-recovery")
@@ -112,15 +116,15 @@ public class UserController {
             log.info(mailPin);
             sender.sendMail(email, mailPin);
             return "redirect:/user/pin-checking";
-        } else {
-            model.addAttribute("message", "Are you sure you have an account? :(");
         }
+        model.addAttribute("message", "Are you sure you have an account? :(");
         return "recovery";
     }
 
     @GetMapping("pin-checking")
-    String handlePin() {
-        return "pin";
+    ModelAndView handlePin() {
+        ModelAndView mav = new ModelAndView("pin");
+        return mav;
     }
 
     @PostMapping("pin-checking")
@@ -132,15 +136,15 @@ public class UserController {
                 return "redirect:/user/login";
             }
             return "redirect:/user/password-updating";
-        } else {
-            model.addAttribute("message", "Pins didn't match!");
-            return "pin";
         }
+        model.addAttribute("message", "Pins didn't match!");
+        return "pin";
     }
 
     @GetMapping("password-updating")
-    String handlePassword() {
-        return "password";
+    ModelAndView handlePassword() {
+        ModelAndView mav = new ModelAndView("password");
+        return mav;
     }
 
     @PostMapping("password-updating")
@@ -150,13 +154,13 @@ public class UserController {
             user.setPassword(newPass);
             userService.updatePass(user);
             return new RedirectView("/user/login");
-        } else
-            model.addAttribute("message", "Passwords didn't match!");
+        }
+        model.addAttribute("message", "Passwords didn't match!");
         return new RedirectView("/user/password-updating");
     }
 
     @GetMapping("logout")
-    RedirectView handleLogout(HttpServletRequest req){
+    RedirectView handleLogout(HttpServletRequest req) {
         HttpSession session = req.getSession();
         session.removeAttribute("user");
         return new RedirectView("/user/login");

@@ -32,9 +32,10 @@ public class MainController {
      * http://localhost:8080/main
      */
     @GetMapping("main")
-    String handleMain(Model model){
-        model.addAttribute("questions", questionService.getAll());
-        return "index";
+    ModelAndView handleMain(Model model){
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("questions", questionService.getAll());
+        return mav;
     }
 
     @PostMapping("main")

@@ -25,8 +25,4 @@ public class AnswerService {
     public Optional<Answer> getAnswerById(long id){
         return answerRepo.findById(id);
     }
-
-    public int getAnswersCount(){
-        return answerRepo.findAll().size();
-    }
 }
