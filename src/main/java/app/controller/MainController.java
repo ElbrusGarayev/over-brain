@@ -32,8 +32,11 @@ public class MainController {
      * http://localhost:8080/main
      */
     @GetMapping("main")
-    ModelAndView handleMain(Model model){
+    ModelAndView handleMain(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
         ModelAndView mav = new ModelAndView("index");
+        mav.addObject("user", user);
         mav.addObject("questions", questionService.getAll());
         return mav;
     }

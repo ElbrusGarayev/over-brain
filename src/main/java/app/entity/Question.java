@@ -28,6 +28,7 @@ public class Question {
     @NotNull
     private String date;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

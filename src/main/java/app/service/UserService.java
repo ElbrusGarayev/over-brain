@@ -35,8 +35,12 @@ public class UserService {
         return userRepo.findAll().stream().anyMatch(user -> user.getUsername().equals(username));
     }
 
-    public User getUser(String email) {
+    public User getUserByEmail(String email) {
         return userRepo.findByEmail(email).get();
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepo.findByUsername(username).get();
     }
 
     public void updatePass(User user) {

@@ -25,10 +25,12 @@ public class Answer {
     @NotNull
     private String date;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "question")
     private Question question;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

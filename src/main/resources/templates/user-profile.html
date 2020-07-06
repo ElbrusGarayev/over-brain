@@ -1,82 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org"
+        lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${username}"></title>
+    <title th:text="${user.fullname}"></title>
     <link rel="stylesheet" href="/css/profile.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<nav class="navbar bg-grad navbar-expand-sm navbar-dark fixed-top">
-    <div class="container">
-        <a href="index.html" class="navbar-brand">
-            <img src="img/overbrain.png" style="width: 35px; "> <span style="vertical-align: middle;">Over Brain</span>
-        </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<div th:replace="fragment/navbar"></div>
 
-        <div id="navbarCollapse" class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item ml-5">
-                    <a href="index.html" class="nav-link active">
-                        Home
-                    </a>
-                </li>
-                <li class="nav-item ml-5">
-                    <a href="users.html" class="nav-link active">
-                        Users
-                    </a>
-                </li>
-                <li class="nav-item ml-5">
-                    <a href="chat.html" class="nav-link active">
-                        Chat
-                    </a>
-                </li>
-                <li class="nav-item ml-5">
-                    <a href="user-profile.html" class="nav-link active">
-                        Profile
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-</nav>
 <div class="wrapper mt-5">
     <div class="profile-card js-profile-card mt-5">
         <div class="profile-card__img">
-            <img src="img/Light.jpg" alt="profile card">
+            <img th:src="${'data:image/png;base64, ' + user.photo}" alt="profile card">
         </div>
 
         <div class="profile-card__cnt js-profile-cnt">
-            <div class="profile-card__name">Garayev Elbrus</div>
-            <div class="profile-card__txt">Back-end Developer</div>
+            <div class="profile-card__name" th:text="${user.fullname}"></div>
             <div class="profile-card-loc">
         <span class="profile-card-loc__icon">
           <svg class="icon"><use xlink:href="#icon-location"></use></svg>
         </span>
 
-                <span class="profile-card-loc__txt">
-          Baku, Azerbaijan
-        </span>
+                <span class="profile-card-loc__txt" th:text="${user.country}"></span>
             </div>
 
             <div class="profile-card-inf">
                 <div class="profile-card-inf__item">
-                    <div class="profile-card-inf__title">1598</div>
+                    <div class="profile-card-inf__title" th:text="${user.getFollowers().size()}"></div>
                     <div class="profile-card-inf__txt">Followers</div>
                 </div>
 
                 <div class="profile-card-inf__item">
-                    <div class="profile-card-inf__title">65</div>
+                    <div class="profile-card-inf__title" th:text="${user.getFollowings().size()}"></div>
                     <div class="profile-card-inf__txt">Following</div>
                 </div>
 
                 <div class="profile-card-inf__item">
-                    <div class="profile-card-inf__title">123</div>
+                    <div class="profile-card-inf__title" th:text="${user.questions.size()}"></div>
                     <div class="profile-card-inf__txt">Posts</div>
                 </div>
 
@@ -89,25 +53,25 @@
             <div class="profile-card-social">
                 <a href="https://www.facebook.com/iaMuhammedErdem" class="profile-card-social__item facebook" target="_blank">
           <span class="icon-font">
-              <svg class="icon"><use xlink:href="#icon-facebook"></use></svg>
+              <i class="icon fa fa-facebook"></i>
           </span>
                 </a>
 
-                <a href="https://twitter.com/iaMuhammedErdem" class="profile-card-social__item twitter" target="_blank">
+                <a th:href="${user.getMediaLink().getTwitter()}" class="profile-card-social__item linkedin" target="_blank">
           <span class="icon-font">
-              <svg class="icon"><use xlink:href="#icon-twitter"></use></svg>
+              <i class="icon fa fa-linkedin"></i>
           </span>
                 </a>
 
                 <a href="https://www.instagram.com/iamuhammederdem" class="profile-card-social__item instagram" target="_blank">
           <span class="icon-font">
-              <svg class="icon"><use xlink:href="#icon-instagram"></use></svg>
+              <i class="icon fa fa-instagram"></i>
           </span>
                 </a>
 
                 <a href="https://github.com/muhammederdem" class="profile-card-social__item github" target="_blank">
           <span class="icon-font">
-              <svg class="icon"><use xlink:href="#icon-github"></use></svg>
+              <i class="icon fa fa-github"></i>
           </span>
                 </a>
 

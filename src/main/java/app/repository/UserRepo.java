@@ -15,4 +15,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
     List<User> findAllByFullnameContainingIgnoreCaseAndUsernameNotLike(String str, String username);
 
     List<User> findAllByUsernameIsNotLike(String username);
+
+    Optional<User> findByUsername(String username);
 }

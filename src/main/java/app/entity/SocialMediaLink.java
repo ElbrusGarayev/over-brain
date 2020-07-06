@@ -21,6 +21,7 @@ public class SocialMediaLink {
     private String instagram;
     private String github;
 
+    @NotNull
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

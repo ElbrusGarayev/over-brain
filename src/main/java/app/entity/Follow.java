@@ -17,10 +17,12 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "who")
     private User who;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "whom")
     private User whom;

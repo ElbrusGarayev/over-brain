@@ -20,10 +20,12 @@ public class Reaction {
     @NotNull
     private boolean status;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "answer")
     private Answer answer;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
