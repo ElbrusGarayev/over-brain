@@ -1,9 +1,11 @@
 package app.controller;
 
 import app.entity.User;
+import app.security.entity.CustomUserDetails;
 import app.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,24 +29,27 @@ public class UserListController {
      * http://localhost:8080/users
      */
     @GetMapping("users")
-    ModelAndView handleProfile(HttpServletRequest req){
-        HttpSession session = req.getSession();
-        user = (User) session.getAttribute("user");
+    ModelAndView handleProfile(Authentication auth){
         ModelAndView mav = new ModelAndView("users");
-        mav.addObject("users", userService.getUsers(user.getUsername()));
+        mav.addObject("users", userService.getAll());
         return mav;
     }
 
     @PostMapping("users")
     ModelAndView handleProfile(@RequestParam String search){
         ModelAndView mav = new ModelAndView("users");
-        mav.addObject("users", userService.getUsersBy(search, user.getUsername()));
+        mav.addObject("users", userService.getUsersBy(search));
         return mav;
     }
 
     @RequestMapping(value="/autocomplete")
     @ResponseBody
     public List<String> plantNamesAutocomplete(@RequestParam(value="term", required = false, defaultValue="") String term)  {
-        return userService.getUsersBy(term, user.getUsername()).stream().map(el -> el.getFullname()).collect(Collectors.toList());
+        return userService
+                .getUsersBy(term)
+                .stream()
+                .map(User::getFullname)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

@@ -9,6 +9,7 @@ import app.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class UserController {
     private final MediaService mediaService;
     private final Sender sender;
     private final PinGenerator generator;
+    private final PasswordEncoder encoder;
 
     private static String mailPin;
     private static String umail;
@@ -62,6 +64,7 @@ public class UserController {
         }
         if (regChecking.equals("ok")) {
             newUser.setPhoto(Base64.getEncoder().encodeToString(photo.getBytes()));
+            newUser.setPassword(encoder.encode(newUser.getPassword()));
             user = newUser;
             mailPin = String.valueOf(generator.generate());
             log.info(mailPin);
@@ -85,18 +88,6 @@ public class UserController {
     ModelAndView handleLogin() {
         ModelAndView mav = new ModelAndView("login");
         return mav;
-    }
-
-    @PostMapping("login")
-    String handleLogin(User user, Model model, HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        Optional<User> current = userService.login(user.getUsername(), user.getPassword());
-        if (current.isPresent()) {
-            session.setAttribute("user", current.get());
-            return "redirect:/main";
-        }
-        model.addAttribute("message", "Username or Password is wrong!");
-        return "login";
     }
 
     /**
@@ -157,12 +148,5 @@ public class UserController {
         }
         model.addAttribute("message", "Passwords didn't match!");
         return new RedirectView("/user/password-updating");
-    }
-
-    @GetMapping("logout")
-    RedirectView handleLogout(HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        session.removeAttribute("user");
-        return new RedirectView("/user/login");
     }
 }

@@ -1,5 +1,6 @@
 <!doctype html>
 <html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       lang="en">
 
 <head>
@@ -21,7 +22,15 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<title></title>
+<style>
+    .logout {
+        background-color: rgba(255, 0, 0, 0);
+        font-family: "Quicksand", sans-serif;
+        border: none;
+        color: white;
+        font-weight: bold;
+    }
+</style>
 </head>
 
 <body>
@@ -49,24 +58,33 @@
                         Users
                     </a>
                 </li>
-                <li class="nav-item ml-5">
+                <li class="nav-item ml-5" sec:authorize="isAuthenticated()">
                     <a href="#popup1" class="nav-link active">
                         Ask
                     </a>
                 </li>
-                <li class="nav-item ml-5">
-                    <a href="chat.html" class="nav-link active">
-                        Chat
-                    </a>
-                </li>
-                <li class="nav-item ml-5">
-                    <a th:href="${user.username}" class="nav-link active">
+                <li class="nav-item ml-5" sec:authorize="isAuthenticated()">
+                    <a th:href="'/profile/' + ${user.username}" class="nav-link active">
                         Profile
                     </a>
                 </li>
-                <li class="nav-item ml-5">
-                    <a href="/user/logout" class="nav-link active">
-                        Logout
+                <li class="nav-item ml-5" sec:authorize="isAuthenticated()">
+                    <form method="post" th:action="@{/logout}">
+                        <a type="" href="/user/logout" class="nav-link active">
+                            <button class="logout" type="submit">
+                                Logout
+                            </button>
+                        </a>
+                    </form>
+                </li>
+                <li class="nav-item ml-5" sec:authorize="isAnonymous()">
+                    <a href="/user/login" class="nav-link active">
+                        Login
+                    </a>
+                </li>
+                <li class="nav-item ml-5" sec:authorize="isAnonymous()">
+                    <a href="/user/register" class="nav-link active">
+                        Register
                     </a>
                 </li>
             </ul>
@@ -97,8 +115,9 @@
                 <div class="card-body">
                     <form method="post" action="/search">
                         <div class="input-group group">
-                            <input id="search" type="text" class="form-control search-txt autocomplete" placeholder="Search for..." name="search">
-                            <button type="submit" class="btn-search">
+                            <input id="search" type="text" class="form-control search-txt autocomplete"
+                                   placeholder="Search for..." name="search">
+                            <button type="submit" class="btn-search font-weight-bold text-white">
                                 Go!
                             </button>
                         </div>
@@ -127,7 +146,7 @@
 </div>
 
 <div id="popup1" class="overlay">
-    <form method="post">
+    <form method="post" action="/main">
         <div class="popup">
             <h2>Ask your question!</h2>
             <div class="line mt-1 mb-2 rounded"></div>

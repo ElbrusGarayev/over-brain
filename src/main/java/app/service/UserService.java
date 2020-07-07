@@ -1,5 +1,6 @@
 package app.service;
 
+import app.entity.Reaction;
 import app.entity.User;
 import app.repository.UserRepo;
 import lombok.AllArgsConstructor;
@@ -54,12 +55,20 @@ public class UserService {
                 .findAny();
     }
 
-    public List<User> getUsers(String username){
-        return userRepo.findAllByUsernameIsNotLike(username);
+    public List<User> getAll(){
+        return userRepo.findAll();
     }
 
-    public List<User> getUsersBy(String str, String username){
-        return userRepo.findAllByFullnameContainingIgnoreCaseAndUsernameNotLike(str, username);
+    public List<User> getUsersBy(String str){
+        return userRepo.findAllByFullnameContainingIgnoreCase(str);
+    }
+
+    public long getReactionsCount(User user){
+        return user.getAnswers()
+                .stream()
+                .map(answer -> answer.getReactions().stream()
+                        .filter(Reaction::isStatus))
+                .count();
     }
 
     public void save(User user) {

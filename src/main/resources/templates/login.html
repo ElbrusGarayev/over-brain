@@ -16,13 +16,13 @@
     <div class="container">
         <h1>Welcome</h1>
 
-        <form class="form" method="post">
+        <form class="form" method="post" th:action="@{/user/login}">
             <input required type="text" placeholder="Username" name="username">
             <input required type="password" placeholder="Password" name="password">
             <button type="submit" id="login-button">Login</button>
             <br>
             <br>
-            <label th:text="${message}"></label>
+            <span th:if="${param.error}">Invalid username or password!</span>
             <br>
             <br>
             <span><a href="/user/register" class="sign">Sign up</a></span>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,7 +46,7 @@
                 </div>
 
                 <div class="profile-card-inf__item">
-                    <div class="profile-card-inf__title">85</div>
+                    <div class="profile-card-inf__title" th:text="${reactions}"></div>
                     <div class="profile-card-inf__txt">Reactions</div>
                 </div>
             </div>

@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Log4j2
 @AllArgsConstructor
 @Controller
-@RequestMapping("/")
+@RequestMapping("/profile")
 public class ProfileController {
 
     private final UserService userService;
 
     @GetMapping("{username}")
-    ModelAndView handleProfile(@PathVariable String username, HttpServletRequest req){
+    ModelAndView handleProfile(@PathVariable String username){
         User user = userService.getUserByUsername(username);
         ModelAndView mav = new ModelAndView("user-profile");
         mav.addObject("user", user);
+        mav.addObject("reactions", userService.getReactionsCount(user));
         return mav;
     }
 }
