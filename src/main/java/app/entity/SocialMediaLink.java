@@ -17,7 +17,7 @@ public class SocialMediaLink {
     private long id;
 
     private String facebook;
-    private String twitter;
+    private String linkedin;
     private String instagram;
     private String github;
 

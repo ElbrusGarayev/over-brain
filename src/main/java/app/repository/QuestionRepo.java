@@ -11,5 +11,5 @@ public interface QuestionRepo extends JpaRepository<Question, Long> {
 
     List<Question> findAllByOrderByIdDesc();
 
-    List<Question> findAllByTitleContainingIgnoreCase(String title);
+    List<Question> findAllByTitleContainingIgnoreCaseOrderByIdDesc(String title);
 }

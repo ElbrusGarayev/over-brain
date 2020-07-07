@@ -36,15 +36,12 @@ public class QuestionController {
     private final Filter filter;
 
     private static long questionId;
-    private static User currUser;
 
     /**
      * http://localhost:8080/question/1
      */
     @GetMapping("{id}")
-    ModelAndView handleQuestion(@PathVariable long id, Authentication auth) {
-        CustomUserDetails customUser = (CustomUserDetails) auth.getPrincipal();
-        currUser = customUser.getUser();
+    ModelAndView handleQuestion(@PathVariable long id) {
         questionId = id;
         ModelAndView mav = new ModelAndView("question");
         mav.addObject("question", questionService.getQuestionById(id).get());
@@ -53,14 +50,18 @@ public class QuestionController {
     }
 
     @PostMapping("{id}")
-    RedirectView handleAnswer(@RequestParam Optional<String> answerText, @PathVariable long id) {
+    RedirectView handleAnswer(@RequestParam Optional<String> answerText, @PathVariable long id, Authentication auth) {
+        CustomUserDetails customUser = (CustomUserDetails) auth.getPrincipal();
+        User currUser = customUser.getUser();
         answerService.save(new Answer(answerText.get(), LocalDateTime.now().format(formatter),
                 questionService.getQuestionById(id).get(), currUser));
         return new RedirectView("/question/" + id);
     }
 
     @PostMapping("/react")
-    RedirectView handleLike(HttpServletRequest req) {
+    RedirectView handleLike(HttpServletRequest req, Authentication auth) {
+        CustomUserDetails customUser = (CustomUserDetails) auth.getPrincipal();
+        User currUser = customUser.getUser();
         long answerId = Long.parseLong(req.getParameter("answerId"));
         String button = req.getParameter("button");
         Answer currAnswer = answerService.getAnswerById(answerId).get();

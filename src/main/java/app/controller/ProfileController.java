@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Log4j2
 @AllArgsConstructor
 @Controller
-@RequestMapping("/profile")
+@RequestMapping("/")
 public class ProfileController {
 
     private final UserService userService;
