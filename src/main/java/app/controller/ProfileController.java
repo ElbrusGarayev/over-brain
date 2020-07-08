@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Log4j2
 @AllArgsConstructor
 @Controller
-@RequestMapping("/")
+@RequestMapping
 public class ProfileController {
 
     private final UserService userService;
@@ -21,7 +21,7 @@ public class ProfileController {
     @GetMapping("{username}")
     ModelAndView handleProfile(@PathVariable String username){
         User user = userService.getUserByUsername(username);
-        ModelAndView mav = new ModelAndView("user-profile");
+        ModelAndView mav = new ModelAndView("profile");
         mav.addObject("user", user);
         mav.addObject("reactions", userService.getReactionsCount(user));
         return mav;

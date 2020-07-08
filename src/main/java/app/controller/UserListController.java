@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @AllArgsConstructor
 @Controller
-@RequestMapping("/")
+@RequestMapping("/users")
 public class UserListController {
 
     private final UserService userService;
@@ -28,14 +28,14 @@ public class UserListController {
     /**
      * http://localhost:8080/users
      */
-    @GetMapping("users")
+    @GetMapping
     ModelAndView handleProfile(Authentication auth){
         ModelAndView mav = new ModelAndView("users");
         mav.addObject("users", userService.getAll());
         return mav;
     }
 
-    @PostMapping("users")
+    @PostMapping
     ModelAndView handleProfile(@RequestParam String search){
         ModelAndView mav = new ModelAndView("users");
         mav.addObject("users", userService.getUsersBy(search));

@@ -175,3 +175,14 @@ h1{
 .s-name{
     font-size: 1.8rem;
 }
+.ui-menu-item-wrapper:hover{
+    background-color: rgba(65, 88, 208, 0.9) !important;
+    border: none !important;
+}
+.ui-menu-item{
+    font-size: 20px !important;
+    transition: 0.5s !important;
+}
+.ui-menu-item:hover{
+    transform: translate(-5px);
+}

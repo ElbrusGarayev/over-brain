@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @AllArgsConstructor
 @Controller
-@RequestMapping("/")
+@RequestMapping("/main")
 public class MainController {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
@@ -44,12 +44,12 @@ public class MainController {
     /**
      * http://localhost:8080/main
      */
-    @GetMapping("main")
+    @GetMapping
     ModelAndView handleMain(Authentication auth){
         return setMain(auth, questionService.getAll());
     }
 
-    @PostMapping("/main")
+    @PostMapping
     RedirectView handleQuestion(Authentication auth, Question question){
         log.info("WAAAAAAAAAAAAAAAARN");
         CustomUserDetails customUser = (CustomUserDetails) auth.getPrincipal();

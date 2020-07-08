@@ -4,9 +4,10 @@
         lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${user.username}"></title>
-    <link rel="stylesheet" href="css/profile.css">
+    <title th:text="${user.fullname}"></title>
+    <link rel="stylesheet" href="/css/profile.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -15,7 +16,7 @@
 <div class="wrapper mt-5">
     <div class="profile-card js-profile-card mt-5">
         <div class="profile-card__img">
-            <img src="img/Light.jpg" alt="profile card">
+            <img th:src="${'data:image/png;base64, ' + user.photo}" alt="profile card">
         </div>
 
         <div class="profile-card__cnt js-profile-cnt">
@@ -75,34 +76,17 @@
                 </a>
             </div>
 
-            <div class="profile-card-ctr">
-<!--                <button class="profile-card__button button&#45;&#45;blue js-message-btn">Message</button>-->
+            <div class="profile-card-ctr" th:if="${#authentication.getName() == user.username}" sec:authorize="isAuthenticated()">
+                <a href="/settings">
+                    <button class="profile-card__button button--blue">Settings</button>
+                </a>
+            </div>
+            <div class="profile-card-ctr" th:if="${#authentication.getName() != user.username}" sec:authorize="isAuthenticated()">
                 <form method="post">
                     <button type="submit" class="profile-card__button button--orange">Follow</button>
                 </form>
             </div>
         </div>
-
-<!--        <div class="profile-card-message js-message">-->
-<!--            <form class="profile-card-form">-->
-<!--                <div class="profile-card-form__container">-->
-<!--                    <textarea placeholder="Say something..."></textarea>-->
-<!--                </div>-->
-
-<!--                <div class="profile-card-form__bottom">-->
-<!--                    <button class="profile-card__button button&#45;&#45;blue js-message-close">-->
-<!--                        Send-->
-<!--                    </button>-->
-
-<!--                    <button class="profile-card__button button&#45;&#45;gray js-message-close">-->
-<!--                        Cancel-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--            </form>-->
-
-<!--            <div class="profile-card__overlay js-message-close"></div>-->
-<!--        </div>-->
-
     </div>
 
 </div>

@@ -19,6 +19,10 @@ public class SettingsController {
     private final UserService userService;
     private final PasswordEncoder encoder;
 
+    /**
+     * http://localhost:8080/settings
+     */
+
     @GetMapping
     ModelAndView handleSettings(Authentication auth){
         ModelAndView mav = new ModelAndView("settings");

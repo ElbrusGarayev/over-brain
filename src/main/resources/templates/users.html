@@ -51,7 +51,7 @@
         <div class="col-md-2 mt-4 mx-4 info w-50 text-center shadow-lg text-white" th:each="user: ${users}">
             <div class="">
                 <img th:src="${'data:image/png;base64, ' + user.photo}" alt="" class="img-fluid image mt-4 text-center">
-                <a th:href="'/profile/' + ${user.username}"><button class="button-view font-weight-bold">View Detail</button></a>
+                <a th:href="'/' + ${user.username}"><button class="button-view font-weight-bold">View Detail</button></a>
                 <h5 class="mt-3 text-center font-weight-bold name" th:text="${user.fullname}"></h5>
                 <span class="mt-3 " th:text="${user.country}"></span>
                 <h6 class="point text-center" th:text="${user.answers.size()}"></h6>
@@ -64,7 +64,7 @@
 <script type="text/javascript">
     $(function () {
         $("#search").autocomplete({
-            source: "autocomplete",
+            source: "/users/autocomplete",
             minLength: 2
         });
     });
