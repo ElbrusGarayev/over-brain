@@ -7,7 +7,6 @@ import app.repository.ReactionRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -22,10 +21,5 @@ public class ReactionService {
 
     public Optional<Reaction> getByAnswerIdAndUser(Answer answer, User user){
         return reactionRepo.findByAnswerAndUser(answer, user);
-    }
-
-    public boolean checkUser(Answer answer, User user){
-        return answer.getReactions().stream()
-                .noneMatch(reaction -> reaction.getUser().getId() == user.getId());
     }
 }

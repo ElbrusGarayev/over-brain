@@ -49,7 +49,7 @@
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item ml-5">
-                    <a href="/main" class="nav-link active">
+                    <a href="/" class="nav-link active">
                         Home
                     </a>
                 </li>
@@ -64,7 +64,7 @@
                     </a>
                 </li>
                 <li class="nav-item ml-5" sec:authorize="isAuthenticated()">
-                    <a th:href="'/' + ${user.username}" class="nav-link active">
+                    <a th:href="'/profile/' + ${user.username}" class="nav-link active">
                         Profile
                     </a>
                 </li>
@@ -146,7 +146,7 @@
 </div>
 
 <div id="popup1" class="overlay">
-    <form method="post" action="/main">
+    <form method="post" action="/">
         <div class="popup">
             <h2>Ask your question!</h2>
             <div class="line mt-1 mb-2 rounded"></div>
@@ -164,7 +164,7 @@
             </div>
             <div class="row w-100">
                 <div class="col-md-12">
-                    <input type="submit" class="ask float-right" value="ASK!">
+                    <input type="submit" class="ask float-right text-white font-weight-bold" value="ASK!">
                 </div>
             </div>
         </div>
@@ -183,7 +183,7 @@
 <script type="text/javascript">
     $(function () {
         $("#search").autocomplete({
-            source: "/main/autocompletequestion",
+            source: "autocompletequestion",
             minLength: 3
         });
     });

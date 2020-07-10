@@ -40,9 +40,8 @@
                     </div>
                 </div>
                 <div class="row w-100">
-                    <div class="col-md-12">
-                        <span class="message font-weight-bold text-danger" th:text="${nameMsg}"></span>
-                        <span class="message font-weight-bold text-danger float-right" th:text="${mailMsg}"></span>
+                    <div class="col-md-12 d-flex justify-content-around">
+                        <span class="message font-weight-bold text-danger" th:text="${msg}"></span>
                     </div>
                 </div>
                 <div class="row w-100 ">
@@ -55,7 +54,7 @@
                 </div>
                 <div class="row w-100 ">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="text" placeholder="Username" name="username" minlength="5" maxlength="12">
+                        <input required class="input-item w-100" type="text" placeholder="Username" name="username" minlength="6" maxlength="20">
                     </div>
                     <div class="col-md-6 mt-4">
                         <input required class="input-item w-100" type="email" placeholder="Email" name="email">
@@ -71,7 +70,7 @@
                 </div>
                 <div class="row w-100 msg-row">
                     <div class="col-md-12 justify-content-center">
-                        <span id="message" class="message font-weight-bold" th:text="${passMsg}"></span>
+                        <span id="message" class="message font-weight-bold"></span>
                     </div>
                 </div>
                 <div class="row w-100">
@@ -87,7 +86,7 @@
                         <input class="input-item w-100" type="text" placeholder="Facebook" name="facebook">
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input class="input-item w-100" type="text" placeholder="Twitter" name="twitter">
+                        <input class="input-item w-100" type="text" placeholder="Linkedin" name="linkedin">
                     </div>
                 </div>
                 <div class="row w-100 ">
@@ -106,14 +105,14 @@
                             <div class="upload-button">
                                 <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                             </div>
-                            <input class="file-upload" type="file" accept="image/*" name="pp"/>
+                            <input id="file" class="file-upload" type="file" accept="image/*" name="pp"/>
                         </div>
                     </div>
                 </div>
                 <div class="row w-100">
                     <div class="col-md-12 mt-2">
                         <div class="profile-card-ctr mb-3">
-                            <input type="submit" class="profile-card__button button--blue js-message-btn" value="Register">
+                            <input id="btnSubmit" type="submit" class="profile-card__button button--blue js-message-btn" value="Register">
                         </div>
                     </div>
                 </div>
@@ -201,6 +200,29 @@
 
         $(".upload-button").on('click', function () {
             $(".file-upload").click();
+        });
+    });
+</script>
+<script>
+    var uploadField = document.getElementById("file");
+
+    uploadField.onchange = function() {
+        if(this.files[0].size > 1048576){
+            alert("File must be less than 1.03mb!");
+            this.value = "";
+        };
+    };
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {
+            var password = $("#pass").val();
+            var confirmPassword = $("#rePass").val();
+            if (password != confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            return true;
         });
     });
 </script>

@@ -1,6 +1,6 @@
 spring:
-  main:
-    banner-mode: off
+#  main:
+#    banner-mode: off
 
   datasource:
     url: jdbc:postgresql://localhost:5432/overbrain-local

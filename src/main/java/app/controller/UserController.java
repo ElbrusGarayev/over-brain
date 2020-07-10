@@ -17,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Base64;
-import java.util.Optional;
 
 
 @Log4j2
@@ -45,24 +42,22 @@ public class UserController {
      */
     @GetMapping("register")
     ModelAndView handleRegister() {
-        ModelAndView mav = new ModelAndView("register");
-        return mav;
+        return new ModelAndView("register");
     }
 
     @SneakyThrows
     @PostMapping("register")
     String handleRegister(Model model, User newUser, SocialMediaLink link,
-                          @RequestParam("pp") MultipartFile photo, @RequestParam String rePass) {
-        String regChecking = userService.registerChecking(newUser.getPassword(), rePass, newUser.getUsername());
+                          @RequestParam("pp") MultipartFile photo) {
         if (userService.emailChecking(newUser.getEmail())) {
-            model.addAttribute("mailMsg", "You have account!");
+            model.addAttribute("msg", "Email is already used!");
             return "register";
         }
         if (userService.usernameChecking(newUser.getUsername())) {
-            model.addAttribute("nameMsg", "Username is already used!");
+            model.addAttribute("msg", "Username is already used!");
             return "register";
         }
-        if (regChecking.equals("ok")) {
+        if (userService.usernameValidation(newUser.getUsername())) {
             newUser.setPhoto(Base64.getEncoder().encodeToString(photo.getBytes()));
             newUser.setPassword(encoder.encode(newUser.getPassword()));
             user = newUser;
@@ -73,11 +68,7 @@ public class UserController {
             mediaLink = link;
             return "redirect:/user/pin-checking";
         }
-        if (regChecking.equals("wrongName")) {
-            model.addAttribute("nameMsg", "Username is wrong!");
-            return "register";
-        }
-        model.addAttribute("passMsg", "Passwords didn't match!");
+        model.addAttribute("nameMsg", "Username is wrong!");
         return "register";
     }
 
@@ -86,8 +77,7 @@ public class UserController {
      */
     @GetMapping("login")
     ModelAndView handleLogin() {
-        ModelAndView mav = new ModelAndView("login");
-        return mav;
+        return new ModelAndView("login");
     }
 
     /**
@@ -95,8 +85,7 @@ public class UserController {
      */
     @GetMapping("account-recovery")
     ModelAndView handleRecovery() {
-        ModelAndView mav = new ModelAndView("recovery");
-        return mav;
+        return new ModelAndView("recovery");
     }
 
     @PostMapping("account-recovery")
@@ -114,8 +103,7 @@ public class UserController {
 
     @GetMapping("pin-checking")
     ModelAndView handlePin() {
-        ModelAndView mav = new ModelAndView("pin");
-        return mav;
+        return new ModelAndView("pin");
     }
 
     @PostMapping("pin-checking")
@@ -134,8 +122,7 @@ public class UserController {
 
     @GetMapping("password-updating")
     ModelAndView handlePassword() {
-        ModelAndView mav = new ModelAndView("password");
-        return mav;
+        return new ModelAndView("password");
     }
 
     @PostMapping("password-updating")

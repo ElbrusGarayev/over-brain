@@ -1,16 +1,12 @@
 package app.service;
 
-import app.entity.Reaction;
 import app.entity.User;
 import app.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -20,12 +16,6 @@ public class UserService {
 
     public boolean usernameValidation(String username) {
         return username.matches("\\b[a-zA-Z][a-zA-Z0-9\\-._]{3,}\\b");
-    }
-
-    public String registerChecking(String pass, String rePass, String username) {
-        if (pass.equals(rePass) && usernameValidation(username)) return "ok";
-        if (!usernameValidation(username)) return "wrongName";
-        else return "wrongPass";
     }
 
     public boolean emailChecking(String email){
@@ -66,9 +56,8 @@ public class UserService {
     public long getReactionsCount(User user){
         return user.getAnswers()
                 .stream()
-                .map(answer -> answer.getReactions().stream()
-                        .filter(Reaction::isStatus))
-                .count();
+                .mapToLong(answer -> answer.getReactions().stream()
+                        .filter(reaction -> reaction.isStatus()).count()).sum();
     }
 
     public void save(User user) {
