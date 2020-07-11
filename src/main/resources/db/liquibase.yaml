@@ -1,12 +1,12 @@
 # production database
 url: jdbc:postgresql://localhost:5432/overbrain-local
-username: postgres
-password: Engineer6544
+username: username
+password: password
 
 # development database
 referenceUrl: jdbc:postgresql://localhost:5432/overbrain_dev
-referenceUsername: postgres
-referencePassword: Engineer6544
+referenceUsername: username
+referencePassword: password
 
 # for diff/update
 changeLogFile: src/main/resources/db/changelog/master.yaml
