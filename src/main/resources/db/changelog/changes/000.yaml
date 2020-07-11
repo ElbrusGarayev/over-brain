@@ -1,0 +1,327 @@
+databaseChangeLog:
+- changeSet:
+    id: 1594505329835-1
+    author: Elbru (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: users_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: country
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: fullname
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: password
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: photo
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: username
+            type: VARCHAR(255)
+        - column:
+            name: lastseen
+            type: VARCHAR(255)
+        tableName: users
+- changeSet:
+    id: 1594505329835-2
+    author: Elbru (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: reaction_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: answer
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: BIGINT
+        tableName: reaction
+- changeSet:
+    id: 1594505329835-3
+    author: Elbru (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: question_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: date
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: details
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: title
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: BIGINT
+        tableName: question
+- changeSet:
+    id: 1594505329835-4
+    author: Elbru (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: answer_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: answer_text
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: date
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: question
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: BIGINT
+        tableName: answer
+- changeSet:
+    id: 1594505329835-5
+    author: Elbru (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: follow_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: who
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: whom
+            type: BIGINT
+        tableName: follow
+- changeSet:
+    id: 1594505329835-6
+    author: Elbru (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: social_media_link_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: facebook
+            type: VARCHAR(255)
+        - column:
+            name: github
+            type: VARCHAR(255)
+        - column:
+            name: instagram
+            type: VARCHAR(255)
+        - column:
+            name: linkedin
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: BIGINT
+        tableName: social_media_link
+- changeSet:
+    id: 1594505329835-7
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: reaction
+        constraintName: fk52m11aguxqx0uje12knj056jw
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1594505329835-8
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: question
+        constraintName: fk7rnpup7eaonh2ubt922ormoij
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1594505329835-9
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: question
+        baseTableName: answer
+        constraintName: fks4yfxjrfvek48fcsvg9ndcktu
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: question
+        validate: true
+- changeSet:
+    id: 1594505329835-10
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: answer
+        constraintName: fksdj8jab9t00diflkysw22k7bv
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1594505329835-11
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: answer
+        baseTableName: reaction
+        constraintName: fkt4n3pxya6cortrdogp4ssykfw
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: answer
+        validate: true
+- changeSet:
+    id: 1594505329835-12
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: who
+        baseTableName: follow
+        constraintName: fka1kp28dkcuv83mn1meh70764w
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1594505329835-13
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: whom
+        baseTableName: follow
+        constraintName: fkml83ehcf6ie8jl3tnq0h7trud
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1594505329835-14
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: social_media_link
+        constraintName: fk5va52qd85nu3t64fdx1nhg04u
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+

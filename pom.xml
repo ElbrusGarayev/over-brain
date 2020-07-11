@@ -28,6 +28,16 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
             </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.10.0</version>
+                <configuration>
+                    <propertyFile>src/main/resources/db/liquibase.yaml</propertyFile>
+                    <changeLogDirectory>src/main/resources</changeLogDirectory>
+                    <changeLogFile>db/changelog/master.yaml</changeLogFile>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -71,6 +81,19 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
         </dependency>
     </dependencies>
 </project>

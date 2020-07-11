@@ -9,14 +9,19 @@ import app.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Base64;
 
 
@@ -36,6 +41,10 @@ public class UserController {
     private static String umail;
     private static User user;
     private static SocialMediaLink mediaLink;
+
+    public String getPhotoString(MultipartFile photo) throws IOException {
+       return Base64.getEncoder().encodeToString(photo.getBytes());
+    }
 
     /**
      * http://localhost:8080/user/register
@@ -58,7 +67,7 @@ public class UserController {
             return "register";
         }
         if (userService.usernameValidation(newUser.getUsername())) {
-            newUser.setPhoto(Base64.getEncoder().encodeToString(photo.getBytes()));
+            newUser.setPhoto(getPhotoString(photo));
             newUser.setPassword(encoder.encode(newUser.getPassword()));
             user = newUser;
             mailPin = String.valueOf(generator.generate());
