@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @AllArgsConstructor
@@ -32,17 +34,18 @@ public class ProfileController {
 
     public ModelAndView setProfile(String username, Authentication auth, String message){
         ModelAndView mav = new ModelAndView("profile");
-        currUser = userService.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
         CustomUserDetails userDetails;
         if (auth != null) {
             userDetails = (CustomUserDetails) auth.getPrincipal();
-            if (followService.getAllFollowings(userDetails.getUser()).contains(currUser)) {
+            currUser = userDetails.getUser();
+            if (followService.getAllFollowings(currUser).contains(user)) {
                 mav.addObject("button", "Unfollow");
             } else
                 mav.addObject("button", "Follow");
         }
-        mav.addObject("user", currUser);
-        mav.addObject("reactions", userService.getReactionsCount(currUser));
+        mav.addObject("user", user);
+        mav.addObject("reactions", userService.getReactionsCount(user));
         mav.addObject("msg", message);
         return mav;
     }
@@ -55,8 +58,12 @@ public class ProfileController {
     @PostMapping("{username}")
     RedirectView handleFollow(@PathVariable String username) {
         User user = userService.getUserByUsername(username);
-        followService.save(new Follow(currUser, user));
-        return new RedirectView("/" + username);
+        if (!followService.getAllFollowings(currUser).contains(user)) {
+            followService.follow(new Follow(currUser, user));
+        } else {
+            followService.unfollow(currUser, user);
+        }
+        return new RedirectView("/profile/" + username);
     }
 
     @SneakyThrows
@@ -70,7 +77,6 @@ public class ProfileController {
 
     @PostMapping("change-password")
     ModelAndView handlePassword(@RequestParam String oldPass, @RequestParam String newPass, Authentication auth) {
-        ModelAndView mav = new ModelAndView("profile");
         if (encoder.matches(oldPass, currUser.getPassword())){
             currUser.setPassword(encoder.encode(newPass));
             userService.save(currUser);

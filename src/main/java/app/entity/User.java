@@ -55,7 +55,7 @@ public class User {
     @OneToMany(mappedBy = "whom")
     private List<Message> messagesToMe;
 
-    @OneToMany(mappedBy = "who")
+    @OneToMany(mappedBy = "who", fetch = FetchType.EAGER)
     private List<Follow> followings;
 
     @OneToMany(mappedBy = "whom")

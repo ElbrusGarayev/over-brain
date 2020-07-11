@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="/css/profile.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -56,28 +58,28 @@
                 <a th:href="${user.getMediaLink().getFacebook()}" class="profile-card-social__item facebook"
                    target="_blank">
           <span class="icon-font">
-              <i class="icon fa fa-facebook"></i>
+              <i class="fab fa-facebook-f"></i>
           </span>
                 </a>
 
                 <a th:href="${user.getMediaLink().getLinkedin()}" class="profile-card-social__item linkedin"
                    target="_blank">
           <span class="icon-font">
-              <i class="icon fa fa-linkedin"></i>
+              <i class="fab fa-linkedin-in"></i>
           </span>
                 </a>
 
                 <a th:href="${user.getMediaLink().getInstagram()}" class="profile-card-social__item instagram"
                    target="_blank">
           <span class="icon-font">
-              <i class="icon fa fa-instagram"></i>
+             <i class="fab fa-instagram"></i>
           </span>
                 </a>
 
                 <a th:href="${user.getMediaLink().getGithub()}" class="profile-card-social__item github"
                    target="_blank">
           <span class="icon-font">
-              <i class="icon fa fa-github"></i>
+              <i class="fab fa-github"></i>
           </span>
                 </a>
             </div>
@@ -116,12 +118,12 @@
             </div>
             <div class="row mb-4 w-100">
                 <div class="col-md-12">
-                    <input required type="password" class="input-title w-100" placeholder="New password" name="newPass" id="newPass">
+                    <input required type="password" class="input-title w-100" placeholder="New password" name="newPass" id="newPass" minlength="8">
                 </div>
             </div>
             <div class="row mb-4 w-100">
                 <div class="col-md-12">
-                    <input required type="password" class="input-title w-100" placeholder="Confirm password" name="conPass" id="conPass">
+                    <input required type="password" class="input-title w-100" placeholder="Confirm password" name="conPass" id="conPass" minlength="8">
                 </div>
             </div>
             <div class="row w-100 mb-4">
@@ -151,7 +153,7 @@
                         <div class="upload-button">
                             <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                         </div>
-                        <input id="file" class="file-upload" type="file" accept="image/*" name="photo"/>
+                        <input required id="file" class="file-upload" type="file" accept="image/*" name="photo"/>
                     </div>
                 </div>
             </div>

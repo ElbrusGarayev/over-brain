@@ -11,4 +11,6 @@ import java.util.List;
 public interface FollowRepo extends JpaRepository<Follow, Long> {
 
     List<Follow> findAllByWho(User user);
+
+    void deleteByWhoAndWhom(User who, User whom);
 }

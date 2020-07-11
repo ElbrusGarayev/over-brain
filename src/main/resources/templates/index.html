@@ -132,7 +132,9 @@
                         <h4 class="card-title"
                             th:text="${question.user.fullname} + ': ' + ${question.title}"></h4>
                     </a>
-                    <pre th:text="${question.details}"></pre>
+                    <pre>
+                        <code th:text="${question.details}"></code>
+                    </pre>
                 </div>
                 <div class="card-footer ques-foot text-muted bg-white">
                     <span th:text="'Posted on ' + ${question.date}"></span>

@@ -129,7 +129,7 @@ public class UserController {
     RedirectView handlePassword(@RequestParam String newPass, @RequestParam String conPass, Model model) {
         if (newPass.equals(conPass)) {
             User user = userService.getUserByEmail(umail);
-            user.setPassword(newPass);
+            user.setPassword(encoder.encode(newPass));
             userService.updatePass(user);
             return new RedirectView("/user/login");
         }
