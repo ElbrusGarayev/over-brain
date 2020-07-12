@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-        lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
@@ -19,7 +18,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
 </head>
 <body>
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" th:object="${formUser}">
     <div class="container p-5 mt-5">
         <div class="row main-row">
             <div class="col-md-8 p-3 shadow-lg main-col">
@@ -46,23 +45,33 @@
                 </div>
                 <div class="row w-100 ">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="text" placeholder="Fullname" name="fullname">
+                        <input required class="input-item w-100" type="text" placeholder="Fullname" name="fullname" th:field="*{fullname}">
+                        <p th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"
+                           class="alert alert-danger mt-1"></p>
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input id="country" required class="input-item w-100" type="text" placeholder="Country" name="country">
+                        <input id="country" required class="input-item w-100" type="text" placeholder="Country" name="country" th:field="*{country}">
+                        <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}"
+                           class="alert alert-danger mt-1"></p>
                     </div>
                 </div>
                 <div class="row w-100 ">
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="text" placeholder="Username" name="username" minlength="6" maxlength="20">
+                        <input required class="input-item w-100" type="text" placeholder="Username" name="username" minlength="6" maxlength="20" th:field="*{username}">
+                        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                           class="alert alert-danger mt-1"></p>
                     </div>
                     <div class="col-md-6 mt-4">
-                        <input required class="input-item w-100" type="email" placeholder="Email" name="email">
+                        <input required class="input-item w-100" type="email" placeholder="Email" name="email" th:field="*{email}">
+                        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                           class="alert alert-danger mt-1"></p>
                     </div>
                 </div>
                 <div class="row w-100">
                     <div class="col-md-6 mt-4">
-                        <input id="pass" required class="input-item w-100" type="password" placeholder="Password" name="password" minlength="8">
+                        <input id="pass" required class="input-item w-100" type="password" placeholder="Password" name="password" minlength="8" th:field="*{password}">
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                           class="alert alert-danger mt-1"></p>
                     </div>
                     <div class="col-md-6 mt-4">
                         <input id="rePass" required class="input-item w-100" type="password" placeholder="Confirm Password" name="rePass">
@@ -109,16 +118,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="row w-100">
-                    <div class="col-md-12 mt-2">
+                <div class="row w-100 mt-2">
+                    <div class="col-md-6">
                         <div class="profile-card-ctr mb-3">
-                            <input id="btnSubmit" type="submit" class="profile-card__button button--blue js-message-btn" value="Register">
+                            <a href="/user/login">
+                                <input type="button" class="profile-card__button button--blue js-message-btn" value="Sign in">
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-md-12 mt-2 col-sign">
-                        <span><a href="/user/login" class="sign font-weight-bold">Sign in</a></span>
+                    <div class="col-md-6">
+                        <div class="profile-card-ctr mb-3">
+                            <input id="btnSubmit" type="submit" class="profile-card__button button--blue js-message-btn" value="Sign up">
+                        </div>
                     </div>
                 </div>
             </div>

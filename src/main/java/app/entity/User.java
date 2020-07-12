@@ -4,9 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -37,8 +34,6 @@ public class User {
     @NotNull
     @Column(columnDefinition = "text")
     private String photo;
-
-    private String lastseen;
 
     @OneToOne(mappedBy = "user")
     private SocialMediaLink mediaLink;

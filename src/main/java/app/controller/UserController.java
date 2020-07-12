@@ -4,24 +4,23 @@ import app.entity.SocialMediaLink;
 import app.entity.User;
 import app.mail.sending.service.PinGenerator;
 import app.mail.sending.service.Sender;
+import app.model.entity.validation.FormUser;
 import app.service.MediaService;
 import app.service.UserService;
+import org.springframework.validation.Errors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.File;
+import javax.validation.Valid;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Base64;
 
 
@@ -50,34 +49,33 @@ public class UserController {
      * http://localhost:8080/user/register
      */
     @GetMapping("register")
-    ModelAndView handleRegister() {
-        return new ModelAndView("register");
+    public ModelAndView handleRegister() {
+        ModelAndView mav = new ModelAndView("register");
+        mav.addObject("formUser", new FormUser());
+        return mav;
     }
 
     @SneakyThrows
     @PostMapping("register")
-    String handleRegister(Model model, User newUser, SocialMediaLink link,
-                          @RequestParam("pp") MultipartFile photo) {
-        if (userService.emailChecking(newUser.getEmail())) {
-            model.addAttribute("msg", "Email is already used!");
-            return "register";
+    public String handleRegister(@Valid FormUser formUser, Errors errors, User newUser, SocialMediaLink link,
+                                @RequestParam("pp") MultipartFile photo, Model model) {
+        if (!errors.hasErrors()) {
+            if (userService.emailChecking(newUser.getEmail())) {
+                model.addAttribute("msg", "Email is already used!");
+            } else if (userService.usernameChecking(newUser.getUsername())) {
+                model.addAttribute("msg", "Username is already used!");
+            } else {
+                newUser.setPhoto(getPhotoString(photo));
+                newUser.setPassword(encoder.encode(newUser.getPassword()));
+                user = newUser;
+                mailPin = String.valueOf(generator.generate());
+                log.info(mailPin);
+                sender.sendMail(newUser.getEmail(), mailPin);
+                link.setUser(newUser);
+                mediaLink = link;
+                return "redirect:/user/pin-checking";
+            }
         }
-        if (userService.usernameChecking(newUser.getUsername())) {
-            model.addAttribute("msg", "Username is already used!");
-            return "register";
-        }
-        if (userService.usernameValidation(newUser.getUsername())) {
-            newUser.setPhoto(getPhotoString(photo));
-            newUser.setPassword(encoder.encode(newUser.getPassword()));
-            user = newUser;
-            mailPin = String.valueOf(generator.generate());
-            log.info(mailPin);
-            sender.sendMail(newUser.getEmail(), mailPin);
-            link.setUser(newUser);
-            mediaLink = link;
-            return "redirect:/user/pin-checking";
-        }
-        model.addAttribute("nameMsg", "Username is wrong!");
         return "register";
     }
 

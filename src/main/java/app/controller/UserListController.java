@@ -19,13 +19,12 @@ import java.util.stream.Collectors;
 public class UserListController {
 
     private final UserService userService;
-    private static User user;
 
     /**
      * http://localhost:8080/users
      */
     @GetMapping
-    ModelAndView handleProfile(Authentication auth){
+    ModelAndView handleProfile(){
         ModelAndView mav = new ModelAndView("users");
         mav.addObject("users", userService.getAll());
         return mav;

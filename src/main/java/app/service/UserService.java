@@ -14,10 +14,6 @@ public class UserService {
 
     private final UserRepo userRepo;
 
-    public boolean usernameValidation(String username) {
-        return username.matches("\\b[a-zA-Z][a-zA-Z0-9\\-._]{3,}\\b");
-    }
-
     public boolean emailChecking(String email){
         return userRepo.findAll().stream().anyMatch(user -> user.getEmail().equals(email));
     }

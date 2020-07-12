@@ -1,0 +1,1 @@
+web: java -jar target/over-brain-1.0-SNAPSHOT.jar

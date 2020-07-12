@@ -1,7 +1,7 @@
 # production database
-url: jdbc:postgresql://localhost:5432/overbrain-local
-username: username
-password: password
+url: ${JDBC_DATABASE_URL}
+username: ${JDBC_DATABASE_USERNAME}
+password: ${JDBC_DATABASE}
 
 # development database
 referenceUrl: jdbc:postgresql://localhost:5432/overbrain_dev

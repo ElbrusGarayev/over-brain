@@ -132,9 +132,7 @@
                         <h4 class="card-title"
                             th:text="${question.user.fullname} + ': ' + ${question.title}"></h4>
                     </a>
-                    <pre>
-                        <code th:text="${question.details}"></code>
-                    </pre>
+                    <pre th:text="${question.details}"></pre>
                 </div>
                 <div class="card-footer ques-foot text-muted bg-white">
                     <span th:text="'Posted on ' + ${question.date}"></span>
@@ -148,20 +146,24 @@
 </div>
 
 <div id="popup1" class="overlay">
-    <form method="post" action="/">
+    <form method="post" action="/" th:object="${question}">
         <div class="popup">
             <h2>Ask your question!</h2>
             <div class="line mt-1 mb-2 rounded"></div>
             <a class="close" href="#">&times;</a>
             <div class="row mt-4 mb-5">
                 <div class="col-md-12">
-                    <input required type="text" class="input-title" placeholder="Title" name="title">
+                    <input required type="text" class="input-title" placeholder="Title" name="title" th:field="*{title}">
+                    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                       class="alert alert-danger mt-2"></p>
                 </div>
             </div>
             <div class="row mb-4">
                 <div class="col-md-12">
                     <textarea required class="input-item w-100" placeholder="What is your problem?"
-                              name="details"></textarea>
+                              name="details" th:field="*{details}"></textarea>
+                    <p th:if="${#fields.hasErrors('details')}" th:errors="*{details}"
+                       class="alert alert-danger mt-2"></p>
                 </div>
             </div>
             <div class="row w-100">

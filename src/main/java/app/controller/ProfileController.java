@@ -69,18 +69,24 @@ public class ProfileController {
     @SneakyThrows
     @PostMapping("change-photo")
     RedirectView handlePhoto(@RequestParam MultipartFile photo) {
-        String newPhoto = Base64.getEncoder().encodeToString(photo.getBytes());
-        currUser.setPhoto(newPhoto);
-        userService.save(currUser);
+        if (!photo.isEmpty()){
+            String newPhoto = Base64.getEncoder().encodeToString(photo.getBytes());
+            currUser.setPhoto(newPhoto);
+            userService.save(currUser);
+        }
         return new RedirectView("/profile/" + currUser.getUsername());
     }
 
     @PostMapping("change-password")
     ModelAndView handlePassword(@RequestParam String oldPass, @RequestParam String newPass, Authentication auth) {
         if (encoder.matches(oldPass, currUser.getPassword())){
-            currUser.setPassword(encoder.encode(newPass));
-            userService.save(currUser);
-            return setProfile(currUser.getUsername(), auth, "");
+            if (newPass.length() >= 8){
+                currUser.setPassword(encoder.encode(newPass));
+                userService.save(currUser);
+                return setProfile(currUser.getUsername(), auth, "");
+            }
+            else
+                return setProfile(currUser.getUsername(), auth, "New password length shouldn't be less than 8");
         }
         else{
             return setProfile(currUser.getUsername(), auth, "Old password is wrong");

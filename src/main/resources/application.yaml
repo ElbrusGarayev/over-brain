@@ -1,11 +1,10 @@
+server:
+  port: ${PORT:5000}
 spring:
-#  main:
-#    banner-mode: off
-
   datasource:
-    url: jdbc:postgresql://localhost:5432/overbrain-local
-    username: postgres
-    password: Engineer6544
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE}
 
   jpa:
     generate-ddl: true
@@ -24,5 +23,5 @@ spring:
           starttls:
             enable: true
   liquibase:
-    enabled: true
+    enabled: false
     change-log: classpath:/db/changelog/master.yaml
