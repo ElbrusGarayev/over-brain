@@ -2,9 +2,9 @@ server:
   port: ${PORT:5000}
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE}
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/overbrain-local}
+    username: ${JDBC_DATABASE_USERNAME:postgres}
+    password: ${JDBC_DATABASE:Engineer6544}
 
   jpa:
     generate-ddl: true

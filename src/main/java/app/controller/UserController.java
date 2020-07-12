@@ -133,7 +133,7 @@ public class UserController {
     }
 
     @PostMapping("password-updating")
-    RedirectView handlePassword(@RequestParam String newPass, @RequestParam String conPass, Model model) {
+    RedirectView handlePassword(@RequestParam String newPass, @RequestParam String conPass) {
         if (newPass.equals(conPass)) {
             User user = userService.getUserByEmail(umail);
             user.setPassword(encoder.encode(newPass));
