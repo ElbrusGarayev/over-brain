@@ -1,0 +1,18 @@
+# production database
+url: ${JDBC_DATABASE_URL}
+username: ${JDBC_DATABASE_USERNAME}
+password: ${JDBC_DATABASE}
+
+# development database
+referenceUrl: jdbc:postgresql://localhost:5432/overbrain_dev
+referenceUsername: username
+referencePassword: password
+
+# for diff/update
+changeLogFile: src/main/resources/db/changelog/master.yaml
+
+# for initial changelog creation
+outputChangeLogFile: src/main/resources/db/changelog/step0.yaml
+
+# for diff operation
+diffChangeLogFile:  src/main/resources/db/changelog/changes/diff.yaml

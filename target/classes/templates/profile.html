@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.fullname}"></title>
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragment/navbar"></div>
+
+<div class="wrapper mt-5">
+    <div class="profile-card js-profile-card mt-5">
+        <div class="profile-card__img">
+            <img th:src="${'data:image/png;base64, ' + user.photo}" alt="profile card">
+        </div>
+
+        <div class="profile-card__cnt js-profile-cnt">
+            <div class="profile-card__name" th:text="${user.fullname}"></div>
+            <div class="profile-card-loc">
+        <span class="profile-card-loc__icon">
+          <i class="fas fa-street-view"></i>
+        </span>
+                <span class="profile-card-loc__txt" th:text="${user.country}"></span>
+            </div>
+
+            <div class="profile-card-inf">
+                <div class="profile-card-inf__item">
+                    <div class="profile-card-inf__title" th:text="${user.getFollowers().size()}"></div>
+                    <div class="profile-card-inf__txt">Followers</div>
+                </div>
+
+                <div class="profile-card-inf__item">
+                    <div class="profile-card-inf__title" th:text="${user.getFollowings().size()}"></div>
+                    <div class="profile-card-inf__txt">Following</div>
+                </div>
+
+                <div class="profile-card-inf__item">
+                    <div class="profile-card-inf__title" th:text="${user.questions.size()}"></div>
+                    <div class="profile-card-inf__txt">Posts</div>
+                </div>
+
+                <div class="profile-card-inf__item">
+                    <div class="profile-card-inf__title" th:text="${reactions}"></div>
+                    <div class="profile-card-inf__txt">Reactions</div>
+                </div>
+            </div>
+
+            <div class="profile-card-social">
+                <a th:href="${user.getMediaLink().getFacebook()}" class="profile-card-social__item facebook"
+                   target="_blank">
+          <span class="icon-font">
+              <i class="fab fa-facebook-f"></i>
+          </span>
+                </a>
+
+                <a th:href="${user.getMediaLink().getLinkedin()}" class="profile-card-social__item linkedin"
+                   target="_blank">
+          <span class="icon-font">
+              <i class="fab fa-linkedin-in"></i>
+          </span>
+                </a>
+
+                <a th:href="${user.getMediaLink().getInstagram()}" class="profile-card-social__item instagram"
+                   target="_blank">
+          <span class="icon-font">
+             <i class="fab fa-instagram"></i>
+          </span>
+                </a>
+
+                <a th:href="${user.getMediaLink().getGithub()}" class="profile-card-social__item github"
+                   target="_blank">
+          <span class="icon-font">
+              <i class="fab fa-github"></i>
+          </span>
+                </a>
+            </div>
+
+            <div class="profile-card-ctr d-flex justify-content-around"
+                 th:if="${#authentication.getName() == user.username}"
+                 sec:authorize="isAuthenticated()">
+                <a href="#photo">
+                    <button class="profile-card__button button--blue mt-2">Change Photo</button>
+                </a>
+                <a href="#pwd">
+                    <button class="profile-card__button button--blue mt-2">Change password</button>
+                </a>
+            </div>
+            <div class="profile-card-ctr" th:if="${#authentication.getName() != user.username}"
+                 sec:authorize="isAuthenticated()">
+                <form method="post">
+                    <button type="submit" class="profile-card__button button--orange" name="button"
+                            th:text="${button}"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pwd" class="overlay container">
+    <form method="post" action="/profile/change-password#pwd">
+        <div class="popup col-md-5">
+            <h2>Change your password!</h2>
+            <div class="line mt-1 mb-2 rounded"></div>
+            <a class="close" href="#">&times;</a>
+            <div class="row mt-4 mb-4 w-100">
+                <div class="col-md-12">
+                    <input required type="password" class="input-title w-100" placeholder="Old password" name="oldPass" id="oldPass">
+                </div>
+            </div>
+            <div class="row mb-4 w-100">
+                <div class="col-md-12">
+                    <input required type="password" class="input-title w-100" placeholder="New password" name="newPass" id="newPass" minlength="8">
+                </div>
+            </div>
+            <div class="row mb-4 w-100">
+                <div class="col-md-12">
+                    <input required type="password" class="input-title w-100" placeholder="Confirm password" name="conPass" id="conPass" minlength="8">
+                </div>
+            </div>
+            <div class="row w-100 mb-4">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <span id="message" class="message font-weight-bold" th:text="${msg}"></span>
+                </div>
+            </div>
+            <div class="row w-100">
+                <div class="col-md-12 d-flex justify-content-around">
+                    <input id="btnSubmit" type="submit" class="ask text-white font-weight-bold" value="Submit">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="photo" class="overlay container">
+    <form method="post" action="/profile/change-photo" enctype="multipart/form-data">
+        <div class="popup col-md-5">
+            <h2>Change your photo!</h2>
+            <div class="line mt-1 mb-2 rounded"></div>
+            <a class="close" href="#">&times;</a>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="avatar-wrapper">
+                        <img class="profile-pic" src=""/>
+                        <div class="upload-button">
+                            <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                        </div>
+                        <input required id="file" class="file-upload" type="file" accept="image/*" name="photo"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-around">
+                    <input type="submit" class="ask text-white font-weight-bold" value="Submit">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
+        });
+    });
+</script>
+<script>
+    var uploadField = document.getElementById("file");
+
+    uploadField.onchange = function() {
+        if(this.files[0].size > 1048576){
+            alert("File must be less than 1.03mb!");
+            this.value = "";
+        };
+    };
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {
+            var password = $("#newPass").val();
+            var confirmPassword = $("#conPass").val();
+            if (password != confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            return true;
+        });
+    });
+</script>
+<script>
+    $('#newPass, #conPass').on('keyup', function () {
+        if ($('#newPass').val() == $('#conPass').val()) {
+            $('#message').html('Matching').css('color', 'green');
+        } else
+            $('#message').html('Not Matching').css('color', 'red');
+    });
+</script>
+<script>
+    var messageBox = document.querySelector('.js-message');
+    var btn = document.querySelector('.js-message-btn');
+    var card = document.querySelector('.js-profile-card');
+    var closeBtn = document.querySelectorAll('.js-message-close');
+
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        card.classList.add('active');
+    });
+
+    closeBtn.forEach(function (element, index) {
+        console.log(element);
+        element.addEventListener('click', function (e) {
+            e.preventDefault();
+            card.classList.remove('active');
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

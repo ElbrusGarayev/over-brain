@@ -1,0 +1,27 @@
+databaseChangeLog:
+- changeSet:
+    id: 1594504848878-3
+    author: Elbru (generated)
+    changes:
+    - dropColumn:
+        columnName: lastseen
+        tableName: users
+- changeSet:
+    id: 1594504848878-1
+    author: Elbru (generated)
+    changes:
+    - addNotNullConstraint:
+        columnDataType: varchar(255)
+        columnName: country
+        tableName: users
+        validate: true
+- changeSet:
+    id: 1594504848878-2
+    author: Elbru (generated)
+    changes:
+    - addNotNullConstraint:
+        columnDataType: varchar(255)
+        columnName: fullname
+        tableName: users
+        validate: true
+

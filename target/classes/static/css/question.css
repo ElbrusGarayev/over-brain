@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext');
+
+body {
+    background: linear-gradient(45deg, #4158d0, #c850c0, #4158d0, #c850c0) fixed;
+    animation: gradient 3s ease infinite;
+    background-size: 500% 500%;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+* {
+    font-family: "Quicksand", sans-serif;
+}
+
+.line-cen {
+    width: 100px;
+    height: 6px;
+    margin: 0 auto;
+    background: linear-gradient(45deg, #4158d0, #c850c0);
+}
+
+.line {
+    height: 4px;
+    background: linear-gradient(45deg, #4158d0, #c850c0);
+}
+
+.header h3 {
+    text-align: center;
+    font-weight: bold;
+}
+
+nav {
+    font-weight: bold;
+}
+
+.bg-grad {
+    background: linear-gradient(45deg, rgba(118, 85, 202, 0.7), rgba(65, 88, 208, 0.7));
+}
+
+.card p, h4{
+    font-weight: bold;
+    background: linear-gradient(#4158d0, #c850c0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.card span{
+    font-weight: bold;
+    background: linear-gradient(#4158d0, #c850c0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.input-item {
+    height: 150px;
+    padding: 10px 15px;
+    border-image: linear-gradient(
+            #4158d0 0%,
+            #c850c0 100%
+    ) 1 100%;
+    border-width: 2px;
+    max-height: 350px;
+    min-height: 100px;
+    overflow-y: scroll;
+    background-color: rgba(236,240,241, 0.1) !important;
+}
+
+.input-item:focus {
+    outline: none;
+}
+
+.ans-card {
+    background-color: rgba(236,240,241, 0.9) !important;
+    border-top-right-radius: 20px !important;
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+.con-col {
+    border-radius: 30px;
+    background-color: rgba(255, 0, 0, 0);
+}
+
+.ques-card {
+    background-color: rgba(236,240,241, 0.9) !important;
+    border-top-right-radius: 30px !important;
+    border-bottom-left-radius: 30px !important;
+    border-bottom-right-radius: 30px !important;
+}
+
+.ques-foot {
+    margin-top: 10px;
+    border-bottom-left-radius: 30px !important;
+    border-bottom-right-radius: 30px !important;
+}
+
+.ans-foot {
+    border-bottom-left-radius: 20px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.ans-row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.btn-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-btn {
+    display: inline-block;
+    background: linear-gradient(45deg, #4158d0, #c850c0);
+    padding: 20px 25px;
+    border: none;
+    border-radius: 35px;
+    font-size: large;
+    font-weight: bold;
+    box-shadow: 1px 2px 15px #6944dd;
+    transition: 0.3s;
+}
+.input-btn:hover{
+    transform: translateY(-8px);
+}
+.input-btn:focus{
+    outline: none;
+}
+.input-item::-webkit-scrollbar {
+    display: none;
+}
+.btns{
+    display: flex;
+    justify-content: space-between;
+    width: 230px;
+}
+.btns button{
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    width: 100px;
+    background: linear-gradient(45deg, #4158d0, #c850c0);
+    box-shadow: 1px 2px 15px #6944dd;
+    transition: 0.3s;
+}
+.btns button:hover{
+    transform: translateY(-5px);
+}
+.btns:focus{
+    outline: none;
+}
+.icon-div{
+    height: auto;
+}
+.span-icon{
+    font-size: 30px !important;
+}
