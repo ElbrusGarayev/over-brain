@@ -140,7 +140,6 @@ public class UserController {
             userService.updatePass(user);
             return new RedirectView("/user/login");
         }
-        model.addAttribute("message", "Passwords didn't match!");
         return new RedirectView("/user/password-updating");
     }
 }
