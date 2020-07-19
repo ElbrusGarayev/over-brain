@@ -2,9 +2,9 @@ server:
   port: ${PORT:5000}
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
+    url: jdbc:postgresql://ec2-34-200-15-192.compute-1.amazonaws.com:5432/deh3cojuucddqt
+    username: arbojpexisehoq
+    password: 8b81956ae91cd4da11b6677de1259c168bd832e6989ac73e9a8291b04afce769
 
   jpa:
     generate-ddl: true

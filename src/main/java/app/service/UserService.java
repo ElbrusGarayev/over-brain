@@ -46,7 +46,7 @@ public class UserService {
     }
 
     public Page<User> getAll(String str, Optional<Integer> page){
-        Pageable pageable = PageRequest.of(page.orElse(0), 1,
+        Pageable pageable = PageRequest.of(page.orElse(0), 5,
                 Sort.Direction.ASC, "id");
         return userRepo.findAllByFullnameContainingIgnoreCase(str, pageable);
     }

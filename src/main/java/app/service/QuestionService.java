@@ -23,7 +23,7 @@ public class QuestionService {
     }
 
     public Page<Question> getAll(String search, Optional<Integer> page){
-        Pageable pageable = PageRequest.of(page.orElse(0), 1,
+        Pageable pageable = PageRequest.of(page.orElse(0), 5,
                 Sort.Direction.ASC, "id");
         return questionRepo.findAllByTitleContainingIgnoreCaseOrderByIdDesc(search, pageable);
     }
