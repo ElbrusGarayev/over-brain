@@ -94,8 +94,11 @@
                     <button class="profile-card__button button--blue mt-2">Change password</button>
                 </a>
             </div>
-            <div class="profile-card-ctr" th:if="${#authentication.getName() != user.username}"
+            <div class="profile-card-ctr d-flex justify-content-around" th:if="${#authentication.getName() != user.username}"
                  sec:authorize="isAuthenticated()">
+                <a th:href="'/chat/' + ${user.username}">
+                    <button class="profile-card__button button--blue js-message-btn">Message</button>
+                </a>
                 <form method="post">
                     <button type="submit" class="profile-card__button button--orange" name="button"
                             th:text="${button}"></button>
@@ -218,25 +221,6 @@
             $('#message').html('Matching').css('color', 'green');
         } else
             $('#message').html('Not Matching').css('color', 'red');
-    });
-</script>
-<script>
-    var messageBox = document.querySelector('.js-message');
-    var btn = document.querySelector('.js-message-btn');
-    var card = document.querySelector('.js-profile-card');
-    var closeBtn = document.querySelectorAll('.js-message-close');
-
-    btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        card.classList.add('active');
-    });
-
-    closeBtn.forEach(function (element, index) {
-        console.log(element);
-        element.addEventListener('click', function (e) {
-            e.preventDefault();
-            card.classList.remove('active');
-        });
     });
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

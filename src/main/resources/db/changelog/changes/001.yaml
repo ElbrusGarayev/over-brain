@@ -1,0 +1,73 @@
+databaseChangeLog:
+- changeSet:
+    id: 1595197996579-1
+    author: Elbru (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: message_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: content
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: date
+            type: VARCHAR(255)
+        - column:
+            name: who
+            type: BIGINT
+        - column:
+            name: whom
+            type: BIGINT
+        tableName: message
+- changeSet:
+    id: 1595197996579-2
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: who
+        baseTableName: message
+        constraintName: fk550b82d3ydvkddweo2ey8t8m5
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1595197996579-3
+    author: Elbru (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: whom
+        baseTableName: message
+        constraintName: fkj7wm2nt4hlhy9ag6klnb8alc6
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1595197996579-4
+    author: Elbru (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: lastseen
+            type: varchar(255 BYTE)
+        tableName: users
+
