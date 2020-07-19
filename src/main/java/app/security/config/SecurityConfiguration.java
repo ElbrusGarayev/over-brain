@@ -20,7 +20,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/settings").authenticated();
+                .antMatchers("/chat").authenticated();
 
         http
                 .formLogin()

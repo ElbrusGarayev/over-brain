@@ -57,8 +57,9 @@ public class UserController {
 
     @SneakyThrows
     @PostMapping("register")
-    public String handleRegister(@Valid FormUser formUser, Errors errors, User newUser, SocialMediaLink link,
-                                @RequestParam("pp") MultipartFile photo, Model model) {
+    public String handleRegister(@Valid FormUser formUser, Errors errors, User newUser,
+                                 SocialMediaLink link, @RequestParam("pp") MultipartFile photo,
+                                 Model model) {
         if (!errors.hasErrors()) {
             if (userService.emailChecking(newUser.getEmail())) {
                 model.addAttribute("msg", "Email is already used!");

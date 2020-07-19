@@ -4,7 +4,7 @@ spring:
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE}
+    password: ${JDBC_DATABASE_PASSWORD}
 
   jpa:
     generate-ddl: true
@@ -13,8 +13,8 @@ spring:
     show-sql: true
   mail:
     host: smtp.gmail.com
-    username: overbrain.info
-    password: Over_Brain2020
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     port: 587
     properties:
       mail:

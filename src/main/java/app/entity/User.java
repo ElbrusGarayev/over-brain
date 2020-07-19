@@ -2,6 +2,7 @@ package app.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,6 +32,8 @@ public class User {
     @NotNull
     private String password;
 
+    private String lastseen;
+
     @NotNull
     @Column(columnDefinition = "text")
     private String photo;
@@ -52,4 +55,10 @@ public class User {
 
     @OneToMany(mappedBy = "whom")
     private List<Follow> followers;
+
+    @OneToMany(mappedBy = "who")
+    private List<Message> messagesFromMe;
+
+    @OneToMany(mappedBy = "whom")
+    private List<Message> messagesToMe;
 }

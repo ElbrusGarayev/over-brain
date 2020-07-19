@@ -51,7 +51,8 @@ public class MainController {
     }
 
     @PostMapping
-    RedirectView handleQuestion(@Valid FormQuestion formQuestion, Errors errors, Authentication auth, Question question){
+    RedirectView handleQuestion(@Valid FormQuestion formQuestion, Errors errors,
+                                Authentication auth, Question question){
         if (!errors.hasErrors()){
             CustomUserDetails customUser = (CustomUserDetails) auth.getPrincipal();
             question.setDate(LocalDateTime.now().format(formatter));

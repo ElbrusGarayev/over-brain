@@ -59,6 +59,11 @@
                     </a>
                 </li>
                 <li class="nav-item ml-5" sec:authorize="isAuthenticated()">
+                    <a href="/chat" class="nav-link active">
+                        Chat
+                    </a>
+                </li>
+                <li class="nav-item ml-5" sec:authorize="isAuthenticated()">
                     <a href="#popup1" class="nav-link active">
                         Ask
                     </a>
@@ -145,7 +150,7 @@
     </div>
 </div>
 
-<div id="popup1" class="overlay">
+<div id="popup1" class="overlay" sec:authorize="isAuthenticated()">
     <form method="post" action="/" th:object="${question}">
         <div class="popup">
             <h2>Ask your question!</h2>
