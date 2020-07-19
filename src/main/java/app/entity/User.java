@@ -32,8 +32,6 @@ public class User {
     @NotNull
     private String password;
 
-    private String lastseen;
-
     @NotNull
     @Column(columnDefinition = "text")
     private String photo;

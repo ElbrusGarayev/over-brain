@@ -73,6 +73,7 @@ body{
 	text-align: center;
 }
 .btn-search{
+	width: 80px;
 	border: none;
 	background: linear-gradient(#4158d0, #c850c0);
 	border-radius: 30px;

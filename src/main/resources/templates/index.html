@@ -30,6 +30,15 @@
         color: white;
         font-weight: bold;
     }
+
+    .pagination a {
+        border-radius: 50%;
+        font-size: 18px;
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
 </style>
 </head>
 
@@ -111,8 +120,8 @@
 </header>
 
 <div class="container main-con shadow-lg p-4 mb-lg-5">
-    <div class="row">
-        <div class="col-md-4 h-100">
+    <div class="row justify-content-around">
+        <div class="col-md-8 h-100">
             <div class="card search-card mb-4">
                 <div class="card-header">
                     <h5>Search</h5>
@@ -130,7 +139,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card mb-4 bg-light ques-card" th:each="question: ${questions}">
                 <div class="card-body">
                     <a th:href="'/question/' + ${question.id}" class="text-dark post">
@@ -147,6 +156,14 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12 d-flex justify-content-around mt-2">
+            <div class="pagination font-weight-bold">
+                <a th:if="${page > 0}" th:href="@{'/?page=' + ${page - 1} + '&search=' + ${search}}">&laquo;</a>
+                <a class="page-link mr-1" th:each="i: ${#numbers.sequence(1,totalPages)}"
+                   th:href="@{'/?page=' + ${i - 1} + '&search=' + ${search}}">[[${i}]]</a>
+                <a th:if="${page < totalPages - 1}" th:href="@{'/?page=' + ${page + 1} + '&search=' + ${search}}">&raquo;</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -158,7 +175,8 @@
             <a class="close" href="#">&times;</a>
             <div class="row mt-4 mb-5">
                 <div class="col-md-12">
-                    <input required type="text" class="input-title" placeholder="Title" name="title" th:field="*{title}">
+                    <input required type="text" class="input-title" placeholder="Title" name="title"
+                           th:field="*{title}">
                     <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
                        class="alert alert-danger mt-2"></p>
                 </div>

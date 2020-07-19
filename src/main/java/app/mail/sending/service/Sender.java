@@ -18,7 +18,7 @@ public class Sender {
     private final JavaMailSender javaMailSender;
 
     public EmailStatus sendMail(String to, String text) {
-        String subject = "Your confirmation code";
+        String subject = "Confirmation code";
         try {
             InternetAddress addressFrom = new InternetAddress("overbrain.info", "Over Brain Team");
             MimeMessage mail = javaMailSender.createMimeMessage();

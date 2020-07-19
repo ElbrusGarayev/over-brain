@@ -4,12 +4,14 @@ import app.entity.User;
 import app.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -20,21 +22,28 @@ public class UserListController {
 
     private final UserService userService;
 
+    private ModelAndView getModelAndView(Optional<Integer> page, Optional<String> search) {
+        ModelAndView mav = new ModelAndView("users");
+        page = Optional.of(page.orElse(0));
+        Page<User> currPage = userService.getAll(search.orElse(""), page);
+        mav.addObject("users", currPage);
+        mav.addObject("totalPages", currPage.getTotalPages());
+        mav.addObject("page", page.get());
+        mav.addObject("search", search.orElse(""));
+        return mav;
+    }
+
     /**
      * http://localhost:8080/users
      */
     @GetMapping
-    ModelAndView handleProfile(){
-        ModelAndView mav = new ModelAndView("users");
-        mav.addObject("users", userService.getAll());
-        return mav;
+    ModelAndView handleUsers(@RequestParam Optional<Integer> page, @RequestParam Optional<String> search){
+        return getModelAndView(page, search);
     }
 
     @PostMapping
-    ModelAndView handleProfile(@RequestParam String search){
-        ModelAndView mav = new ModelAndView("users");
-        mav.addObject("users", userService.getUsersBy(search));
-        return mav;
+    ModelAndView handleSearch(@RequestParam Optional<Integer> page, @RequestParam Optional<String> search){
+        return getModelAndView(page, search);
     }
 
     @RequestMapping(value="/autocomplete")

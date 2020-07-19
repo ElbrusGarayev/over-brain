@@ -3,6 +3,10 @@ package app.service;
 import app.entity.User;
 import app.repository.UserRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,8 +45,10 @@ public class UserService {
                 .findAny();
     }
 
-    public List<User> getAll(){
-        return userRepo.findAll();
+    public Page<User> getAll(String str, Optional<Integer> page){
+        Pageable pageable = PageRequest.of(page.orElse(0), 1,
+                Sort.Direction.ASC, "id");
+        return userRepo.findAllByFullnameContainingIgnoreCase(str, pageable);
     }
 
     public List<User> getUsersBy(String str){
