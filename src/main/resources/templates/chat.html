@@ -47,7 +47,7 @@
                 <div class="card-header msg_head">
                     <div class="d-flex bd-highlight" th:if="${whom} != null">
                         <div class="img_cont">
-<!--                            <img th:src="${'data:image/png;base64, ' + whom.photo}" class="rounded-circle user_img">-->
+                            <img th:src="${'data:image/png;base64, ' + whom.photo}" class="rounded-circle user_img">
                         </div>
                         <div class="user_info">
                             <span style="vertical-align: middle" th:text="${whom.fullname}"></span>
@@ -68,8 +68,7 @@
                         <div class="d-flex justify-content-start mb-4"
                              th:unless="${message.who.username} == ${who.username}">
                             <div class="img_cont_msg">
-                                <img th:src="${'data:image/png;base64, ' + message.getWho().photo}"
-                                     class="rounded-circle user_img_msg">
+<!--                                <img th:src="${'data:image/png;base64, ' + message.getWho().photo}" class="rounded-circle user_img_msg">-->
                             </div>
                             <div>
                                 <div class="msg_cotainer" th:text="${message.content}"></div>
