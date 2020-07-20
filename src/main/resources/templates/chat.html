@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body msg_card_body">
+                <div id="chat" class="card-body msg_card_body">
                     <div th:each="message: ${messages}">
                         <div class="d-flex justify-content-end mb-4" th:if="${message.who.username} == ${who.username}">
                             <div>
@@ -93,6 +93,10 @@
         </div>
     </div>
 </div>
+<script>
+    var objDiv = document.getElementById("chat");
+    objDiv.scrollTop = objDiv.scrollHeight;
+</script>
 <script>
     $(document).ready(function () {
         $('#action_menu_btn').click(function () {

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Log4j2
 @AllArgsConstructor
@@ -54,9 +55,10 @@ public class ChatController {
     }
 
     @PostMapping("{username}")
-    RedirectView handleChat(@PathVariable String username, @RequestParam String content){
+    RedirectView handleChat(@PathVariable String username, @RequestParam Optional<String> content){
         String date = LocalDateTime.now().format(formatter);
-        messageService.send(new Message(content, date, who, whom));
+        int trimContentLen = content.get().trim().length();
+        if (trimContentLen > 0) messageService.send(new Message(content.get(), date, who, whom));
         return new RedirectView("/chat/" + username);
     }
 }

@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.entity.User;
+import app.filter.Filter;
 import app.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,12 +22,13 @@ import java.util.stream.Collectors;
 public class UserListController {
 
     private final UserService userService;
+    private final Filter filter;
 
     private ModelAndView getModelAndView(Optional<Integer> page, Optional<String> search) {
         ModelAndView mav = new ModelAndView("users");
         page = Optional.of(page.orElse(0));
         Page<User> currPage = userService.getAll(search.orElse(""), page);
-        mav.addObject("users", currPage);
+        mav.addObject("users", filter.userConverter(currPage));
         mav.addObject("totalPages", currPage.getTotalPages());
         mav.addObject("page", page.get());
         mav.addObject("search", search.orElse(""));

@@ -43,7 +43,7 @@ public class QuestionController {
         questionId = id;
         ModelAndView mav = new ModelAndView("question");
         mav.addObject("question", questionService.getQuestionById(id).get());
-        mav.addObject("answers", filter.entityConverter(answerService.getAllAnswerByQId(id)));
+        mav.addObject("answers", filter.answerConverter(answerService.getAllAnswerByQId(id)));
         return mav;
     }
 
@@ -51,8 +51,12 @@ public class QuestionController {
     RedirectView handleAnswer(@RequestParam Optional<String> answerText, @PathVariable long id, Authentication auth) {
         CustomUserDetails customUser = (CustomUserDetails) auth.getPrincipal();
         User currUser = customUser.getUser();
-        answerService.save(new Answer(answerText.get(), LocalDateTime.now().format(formatter),
-                questionService.getQuestionById(id).get(), currUser));
+        String date = LocalDateTime.now().format(formatter);
+        int trimmedLen = answerText.get().trim().length();
+        if (trimmedLen > 0) {
+            answerService.save(new Answer(answerText.get(), date,
+                    questionService.getQuestionById(id).get(), currUser));
+        }
         return new RedirectView("/question/" + id);
     }
 
