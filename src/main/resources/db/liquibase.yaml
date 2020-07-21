@@ -1,12 +1,12 @@
 # production database
-url: jdbc:postgresql://ec2-34-200-15-192.compute-1.amazonaws.com:5432/deh3cojuucddqt
-username: arbojpexisehoq
-password: 8b81956ae91cd4da11b6677de1259c168bd832e6989ac73e9a8291b04afce769
+url: ${REMOTE_DB_URL}
+username: ${REMOTE_DB_USERNAME}
+password: ${REMOTE_DB_PASSWORD}
 
 # development database
-referenceUrl: jdbc:postgresql://localhost:5432/overbrain-local
-referenceUsername: postgres
-referencePassword: Engineer6544
+referenceUrl: ${JDBC_DATABASE_URL}
+referenceUsername: ${JDBC_DATABASE_USERNAME}
+referencePassword: ${JDBC_DATABASE_PASSWORD}
 
 # for diff/update
 changeLogFile: src/main/resources/db/changelog/master.yaml
