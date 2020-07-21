@@ -7,6 +7,9 @@ import app.mail.sending.service.Sender;
 import app.model.entity.validation.FormUser;
 import app.service.MediaService;
 import app.service.UserService;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -49,10 +52,13 @@ public class UserController {
      * http://localhost:8080/user/register
      */
     @GetMapping("register")
-    public ModelAndView handleRegister() {
-        ModelAndView mav = new ModelAndView("register");
-        mav.addObject("formUser", new FormUser());
-        return mav;
+    public String handleRegister(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
+        model.addAttribute("formUser", new FormUser());
+        return "register";
     }
 
     @SneakyThrows
@@ -84,8 +90,12 @@ public class UserController {
      * http://localhost:8080/user/login
      */
     @GetMapping("login")
-    ModelAndView handleLogin() {
-        return new ModelAndView("login");
+    String handleLogin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
+        return "login";
     }
 
     /**
