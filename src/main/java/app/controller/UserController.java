@@ -41,7 +41,7 @@ public class UserController {
 
     private static String mailPin;
     private static String umail;
-    private static User user;
+    private static User currUser;
     private static SocialMediaLink mediaLink;
 
     private String getPhotoString(MultipartFile photo) throws IOException {
@@ -82,7 +82,7 @@ public class UserController {
             } else {
                 newUser.setPhoto(getPhotoString(photo));
                 newUser.setPassword(encoder.encode(newUser.getPassword()));
-                user = newUser;
+                currUser = newUser;
                 mailPin = String.valueOf(generator.generate());
                 log.info(mailPin);
                 sender.sendMail(newUser.getEmail(), mailPin);
@@ -115,16 +115,14 @@ public class UserController {
     }
 
     @PostMapping("account-recovery")
-    String handleRecovery(@RequestParam String email, Model model) {
+    RedirectView handleRecovery(@RequestParam String email) {
         if (userService.emailChecking(email)) {
             umail = email;
             mailPin = String.valueOf(generator.generate());
             log.info(mailPin);
             sender.sendMail(email, mailPin);
-            return "redirect:/user/pin-checking";
         }
-        model.addAttribute("message", "Are you sure you have an account? :(");
-        return "recovery";
+        return new RedirectView("/user/pin-checking");
     }
 
     @GetMapping("pin-checking")
@@ -135,9 +133,10 @@ public class UserController {
     @PostMapping("pin-checking")
     String handlePin(@RequestParam String pin, Model model) {
         if (pin.equals(mailPin)) {
-            if (user != null) {
-                userService.save(user);
+            if (currUser != null) {
+                userService.save(currUser);
                 mediaService.save(mediaLink);
+                currUser = null;
                 return "redirect:/user/login";
             }
             return "redirect:/user/password-updating";
@@ -153,8 +152,9 @@ public class UserController {
 
     @PostMapping("password-updating")
     RedirectView handlePassword(@RequestParam String newPass, @RequestParam String conPass) {
-        if (newPass.equals(conPass)) {
-            User user = userService.getUserByEmail(umail);
+        User user = userService.getUserByEmail(umail);
+        if (user == null) return new RedirectView("/user/login");
+        else if (newPass.equals(conPass)) {
             user.setPassword(encoder.encode(newPass));
             userService.updatePass(user);
             return new RedirectView("/user/login");
