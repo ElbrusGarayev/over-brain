@@ -32,7 +32,13 @@ public class ProfileController {
 
     private static User currUser;
 
-    public ModelAndView setProfile(String username, Authentication auth, String message){
+    private boolean checkContentType(MultipartFile file){
+        return file.getContentType().matches("image/jpeg") ||
+                file.getContentType().matches("image/jpg") ||
+                file.getContentType().matches("image/png");
+    }
+
+    private ModelAndView setProfile(String username, Authentication auth, String message){
         ModelAndView mav = new ModelAndView("profile");
         User user = userService.getUserByUsername(username);
         CustomUserDetails userDetails;
@@ -69,7 +75,7 @@ public class ProfileController {
     @SneakyThrows
     @PostMapping("change-photo")
     RedirectView handlePhoto(@RequestParam MultipartFile photo) {
-        if (!photo.isEmpty()){
+        if (!photo.isEmpty() && checkContentType(photo)){
             String newPhoto = Base64.getEncoder().encodeToString(photo.getBytes());
             currUser.setPhoto(newPhoto);
             userService.save(currUser);

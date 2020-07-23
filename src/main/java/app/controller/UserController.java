@@ -44,8 +44,14 @@ public class UserController {
     private static User user;
     private static SocialMediaLink mediaLink;
 
-    public String getPhotoString(MultipartFile photo) throws IOException {
+    private String getPhotoString(MultipartFile photo) throws IOException {
        return Base64.getEncoder().encodeToString(photo.getBytes());
+    }
+
+    private boolean checkContentType(MultipartFile file){
+        return file.getContentType().matches("image/jpeg") ||
+                file.getContentType().matches("image/jpg") ||
+                file.getContentType().matches("image/png");
     }
 
     /**
@@ -67,6 +73,8 @@ public class UserController {
                                  SocialMediaLink link, @RequestParam("pp") MultipartFile photo,
                                  Model model) {
         if (!errors.hasErrors()) {
+            if(!checkContentType(photo))
+                model.addAttribute("msg", "You can use only jpeg, jpg, png files!");
             if (userService.emailChecking(newUser.getEmail())) {
                 model.addAttribute("msg", "Email is already used!");
             } else if (userService.usernameChecking(newUser.getUsername())) {
