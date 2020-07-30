@@ -21,7 +21,7 @@
 <div class="wrapper mt-5">
     <div class="profile-card js-profile-card mt-5">
         <div class="profile-card__img">
-            <img th:src="${'data:image/png;base64, ' + user.photo}" alt="profile card">
+            <img th:src="${user.photo}" alt="profile card">
         </div>
 
         <div class="profile-card__cnt js-profile-cnt">

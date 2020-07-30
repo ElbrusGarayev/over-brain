@@ -1,11 +1,11 @@
 server:
   port: ${PORT:5000}
+
 spring:
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
-
   jpa:
     generate-ddl: true
     hibernate:
@@ -25,3 +25,8 @@ spring:
   liquibase:
     enabled: false
     change-log: classpath:/db/changelog/master.yaml
+
+cloudinary:
+  cloud_name: ${CLOUDINARY_NAME}
+  api_key: ${CLOUDINARY_KEY}
+  api_secret: ${CLOUDINARY_SECRET}

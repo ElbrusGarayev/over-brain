@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.cloudinary.service.CloudinaryService;
 import app.entity.Follow;
 import app.entity.User;
 import app.security.entity.CustomUserDetails;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -28,12 +30,13 @@ public class ProfileController {
 
     private final UserService userService;
     private final FollowService followService;
+    private final CloudinaryService cloudinaryService;
     private PasswordEncoder encoder;
 
     private static User currUser;
 
     private boolean checkContentType(MultipartFile file){
-        return file.getContentType().matches("image/jpeg") ||
+        return Objects.requireNonNull(file.getContentType()).matches("image/jpeg") ||
                 file.getContentType().matches("image/jpg") ||
                 file.getContentType().matches("image/png");
     }
@@ -76,8 +79,7 @@ public class ProfileController {
     @PostMapping("change-photo")
     RedirectView handlePhoto(@RequestParam MultipartFile photo) {
         if (!photo.isEmpty() && checkContentType(photo)){
-            String newPhoto = Base64.getEncoder().encodeToString(photo.getBytes());
-            currUser.setPhoto(newPhoto);
+            currUser.setPhoto(cloudinaryService.uploadFile(photo.getBytes()));
             userService.save(currUser);
         }
         return new RedirectView("/profile/" + currUser.getUsername());

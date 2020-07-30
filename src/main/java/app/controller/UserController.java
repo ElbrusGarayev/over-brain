@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.cloudinary.service.CloudinaryService;
 import app.entity.SocialMediaLink;
 import app.entity.User;
 import app.mail.sending.service.PinGenerator;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Objects;
 
 
 @Log4j2
@@ -38,18 +40,16 @@ public class UserController {
     private final Sender sender;
     private final PinGenerator generator;
     private final PasswordEncoder encoder;
+    private final CloudinaryService cloudinaryService;
 
     private static String mailPin;
     private static String umail;
     private static User currUser;
     private static SocialMediaLink mediaLink;
-
-    private String getPhotoString(MultipartFile photo) throws IOException {
-       return Base64.getEncoder().encodeToString(photo.getBytes());
-    }
+    private static byte[] file;
 
     private boolean checkContentType(MultipartFile file){
-        return file.getContentType().matches("image/jpeg") ||
+        return Objects.requireNonNull(file.getContentType()).matches("image/jpeg") ||
                 file.getContentType().matches("image/jpg") ||
                 file.getContentType().matches("image/png");
     }
@@ -80,7 +80,7 @@ public class UserController {
             } else if (userService.usernameChecking(newUser.getUsername())) {
                 model.addAttribute("msg", "Username is already used!");
             } else {
-                newUser.setPhoto(getPhotoString(photo));
+                file = photo.getBytes();
                 newUser.setPassword(encoder.encode(newUser.getPassword()));
                 currUser = newUser;
                 mailPin = String.valueOf(generator.generate());
@@ -134,6 +134,7 @@ public class UserController {
     String handlePin(@RequestParam String pin, Model model) {
         if (pin.equals(mailPin)) {
             if (currUser != null) {
+                currUser.setPhoto(cloudinaryService.uploadFile(file));
                 userService.save(currUser);
                 mediaService.save(mediaLink);
                 currUser = null;
