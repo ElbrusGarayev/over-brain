@@ -47,6 +47,7 @@ public class UserController {
     private static User currUser;
     private static SocialMediaLink mediaLink;
     private static byte[] file;
+    private static String defaultPhoto = "http://res.cloudinary.com/over-brain/image/upload/v1596114684/tduuw9lkanwzfw8v3juy.png";
 
     private boolean checkContentType(MultipartFile file){
         return Objects.requireNonNull(file.getContentType()).matches("image/jpeg") ||
@@ -134,7 +135,10 @@ public class UserController {
     String handlePin(@RequestParam String pin, Model model) {
         if (pin.equals(mailPin)) {
             if (currUser != null) {
-                currUser.setPhoto(cloudinaryService.uploadFile(file));
+                if (file.length == 0)
+                    currUser.setPhoto(defaultPhoto);
+                else
+                    currUser.setPhoto(cloudinaryService.uploadFile(file));
                 userService.save(currUser);
                 mediaService.save(mediaLink);
                 currUser = null;
