@@ -29,7 +29,7 @@
                             <a th:href="'/chat/' + ${contact.username}">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
-                                        <img th:src="${'data:image/png;base64, ' + contact.photo}"
+                                        <img th:src="${contact.photo}"
                                              class="rounded-circle user_img">
                                     </div>
                                     <div class="user_info">
@@ -48,7 +48,7 @@
                 <div class="card-header msg_head">
                     <div class="d-flex bd-highlight" th:if="${whom} != null">
                         <div class="img_cont">
-                            <img th:src="${'data:image/png;base64, ' + whom.photo}" class="rounded-circle user_img">
+                            <img th:src="${whom.photo}" class="rounded-circle user_img">
                         </div>
                         <div class="user_info">
                             <span style="vertical-align: middle" th:text="${whom.fullname}"></span>
