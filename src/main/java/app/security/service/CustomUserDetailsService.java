@@ -21,11 +21,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final LoginAttemptService attemptService;
 
     private String getClientIP() {
-        String xfHeader = request.getHeader("X-Forwarded-For");
-        if (xfHeader == null){
-            return request.getRemoteAddr();
-        }
-        return xfHeader.split(",")[0];
+        return Optional.ofNullable(request.getHeader("X-Forwarded-For"))
+                .map(xf -> xf.split(",")[0])
+                .orElseGet(() -> request.getRemoteAddr());
     }
 
     @Override
@@ -35,9 +33,9 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new RuntimeException("blocked");
         }
         try{
-            Optional<User> user = userRepo.findByUsername(username);
-            user.orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
-            return user.map(CustomUserDetails::new).get();
+            return userRepo.findByUsername(username)
+                    .map(CustomUserDetails::new)
+                    .orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
         }catch (Exception e){
             throw new RuntimeException(e);
         }

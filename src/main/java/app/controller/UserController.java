@@ -59,13 +59,9 @@ public class UserController {
      * http://localhost:8080/user/register
      */
     @GetMapping("register")
-    public String handleRegister(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/";
-        }
-        model.addAttribute("formUser", new FormUser());
-        return "register";
+    public String handleRegister(Authentication auth) {
+        return auth instanceof AnonymousAuthenticationToken ?
+                "register" : "redirect:/";
     }
 
     @SneakyThrows
@@ -99,12 +95,9 @@ public class UserController {
      * http://localhost:8080/user/login
      */
     @GetMapping("login")
-    String handleLogin() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/";
-        }
-        return "login";
+    String handleLogin(Authentication auth) {
+        return auth instanceof AnonymousAuthenticationToken ?
+                "login" : "redirect:/";
     }
 
     /**
