@@ -10,7 +10,6 @@ import app.service.MediaService;
 import app.service.UserService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -24,8 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.Base64;
 import java.util.Objects;
 
 
